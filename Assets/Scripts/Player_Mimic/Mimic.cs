@@ -292,14 +292,14 @@ public class Mimic : MonoBehaviour
         Vector3 startPosition = edibleTransform.position;
         float elapsed = 0f;
 
-        // while (elapsed < ediblePullDuration && edibleTransform != null)
-        // {
-        //     elapsed += Time.deltaTime;
-        //     float progress = ediblePullDuration <= 0f ? 1f : elapsed / ediblePullDuration;
-        //     edibleTransform.position = Vector3.Lerp(startPosition, transform.position, progress);
-        //     yield return null;
-        // }
-        yield return null;
+        while (elapsed < ediblePullDuration && edibleTransform != null)
+        {
+            elapsed += Time.deltaTime;
+            float progress = ediblePullDuration <= 0f ? 1f : elapsed / ediblePullDuration;
+            edibleTransform.position = Vector3.Lerp(startPosition, transform.position, progress);
+            yield return null;
+        }
+        // yield return null;
         if (edible != null)
         {
             vitality ??= GetComponent<Vitality>();
