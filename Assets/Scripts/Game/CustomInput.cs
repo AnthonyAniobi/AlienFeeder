@@ -44,8 +44,8 @@ public class CustomInput : MonoBehaviour
             look = inputActions.FindAction("Look").ReadValue<Vector2>();
             attackSingle = inputActions.FindAction("Attack").WasPerformedThisFrame();
             attackContinuous = inputActions.FindAction("Attack").IsPressed();
-            reload = inputActions.FindAction("Reload").WasPerformedThisFrame();
-            cameraSwitch = inputActions.FindAction("SwitchCamera").WasPerformedThisFrame();
+            // reload = inputActions.FindAction("Reload").WasPerformedThisFrame();
+            // cameraSwitch = inputActions.FindAction("SwitchCamera").WasPerformedThisFrame();
             sprint = inputActions.FindAction("Sprint").IsPressed();
             jump = inputActions.FindAction("Jump").WasPerformedThisFrame();
             nextWeapon = inputActions.FindAction("Next").WasPerformedThisFrame();
