@@ -71,9 +71,10 @@ namespace MimicSpace
             // each leg part have the same foot position, butto make it look like "toes" the last handle (handles[7])
             // is a bit offset for every leg part
             Vector2 footOffset = Random.insideUnitCircle.normalized * finalFootDistance;
-            RaycastHit hit;
-            Physics.Raycast(footPosition + Vector3.up * 5f + new Vector3(footOffset.x, 0, footOffset.y), -Vector3.up, out hit);
-            handles[7] = hit.point;
+            Vector3 toePosition = footPosition + new Vector3(footOffset.x, 0, footOffset.y);
+            handles[7] = myMimic.TryGetGroundPoint(toePosition, out Vector3 groundPoint)
+                ? groundPoint
+                : footPosition;
 
             legHeight = Random.Range(legMinHeight, legMaxHeight);
             rotationSpeed = Random.Range(minRotSpeed, maxRotSpeed); // * (Random.Range(0f, 1f) > 0.5f ? -1 : 1);

@@ -46,6 +46,13 @@ namespace MimicSpace
         [Tooltip("Minimum duration before a new leg can be placed")]
         public float newLegCooldown = 0.3f;
 
+        [Header("Surface and Food")]
+        [SerializeField] private string groundTag = "Ground";
+        [SerializeField] private string edibleTag = "Edible";
+        [SerializeField] private float edibleDetectionRadius = 1f;
+
+        public GameObject AttachedEdible { get; private set; }
+
         bool canCreateLeg = true;
 
         List<GameObject> availableLegPool = new List<GameObject>();
@@ -91,6 +98,8 @@ namespace MimicSpace
         // Update is called once per frame
         void Update()
         {
+            TryAttachNearbyEdible();
+
             if (!canCreateLeg)
                 return;
 
@@ -122,11 +131,8 @@ namespace MimicSpace
                 if (Vector3.Angle(velocity, newLegPosition - transform.position) > 45)
                     newLegPosition = transform.position + ((newLegPosition - transform.position) + velocity.normalized * (newLegPosition - transform.position).magnitude) / 2f;
 
-                RaycastHit hit;
-                Physics.Raycast(newLegPosition + Vector3.up * 10f, -Vector3.up, out hit);
-                Vector3 myHit = hit.point;
-                if (Physics.Linecast(transform.position, hit.point, out hit))
-                    myHit = hit.point;
+                if (!TryGetGroundPoint(newLegPosition, out Vector3 myHit))
+                    return;
 
                 float lifeTime = Random.Range(minLegLifetime, maxLegLifetime);
 
@@ -156,6 +162,58 @@ namespace MimicSpace
             newLeg.SetActive(true);
             newLeg.GetComponent<Leg>().Initialize(footPosition, legResolution, maxLegDistance, growCoef, myMimic, lifeTime);
             newLeg.transform.SetParent(myMimic.transform);
+        }
+
+        public bool TryGetGroundPoint(Vector3 position, out Vector3 groundPoint)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(position + Vector3.up * 10f, Vector3.down, 20f);
+            float closestDistance = float.MaxValue;
+            groundPoint = default;
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (!hit.collider.CompareTag(groundTag) || hit.distance >= closestDistance)
+                    continue;
+
+                closestDistance = hit.distance;
+                groundPoint = hit.point;
+            }
+
+            return closestDistance < float.MaxValue;
+        }
+
+        public bool TryAttachEdible(GameObject edible)
+        {
+            if (edible == null || !edible.CompareTag(edibleTag))
+                return false;
+
+            AttachedEdible = edible;
+            edible.transform.SetParent(transform, true);
+            return true;
+        }
+
+        public GameObject DetachEdible()
+        {
+            GameObject edible = AttachedEdible;
+            AttachedEdible = null;
+
+            if (edible != null)
+                edible.transform.SetParent(null, true);
+
+            return edible;
+        }
+
+        private void TryAttachNearbyEdible()
+        {
+            if (AttachedEdible != null)
+                return;
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, edibleDetectionRadius);
+            foreach (Collider candidate in colliders)
+            {
+                if (TryAttachEdible(candidate.gameObject))
+                    return;
+            }
         }
 
         public void RecycleLeg(GameObject leg)
