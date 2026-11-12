@@ -26,17 +26,13 @@ public class Vitality : MonoBehaviour
 
     private void UpdateMimicLevel()
     {
-        MimicLevelEnum newLevel = MimicLevelEnum.child;
-        if (nutrition >= MimicLevel.GetNutritionThreshold())
-            newLevel = MimicLevelEnum.adult;
-        else if (nutrition >= MimicLevel.GetNutritionThreshold())
-            newLevel = MimicLevelEnum.teen;
-
-        if (newLevel == mimicLevel)
-            return;
-
-        mimicLevel = newLevel;
-        GetComponent<MimicSpace.Mimic>()?.ApplyMimicLevel(mimicLevel);
+        
+        if (nutrition >= mimicLevel.GetNutritionThreshold()){
+            int nextLevel = (int)mimicLevel + 1;
+            mimicLevel = (MimicLevelEnum)nextLevel;
+            nutrition = 0f;
+        }
+        GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
     }
 }
 
@@ -45,7 +41,8 @@ public enum MimicLevelEnum
 {
     child = 0,
     teen = 1,
-    adult = 2
+    adult = 2,
+    boss = 3
 }
 
 public static class MimicLevel
@@ -60,6 +57,8 @@ public static class MimicLevel
                 return 20f;
             case MimicLevelEnum.adult:
                 return 30f;
+            case MimicLevelEnum.boss:
+                return float.MaxValue;
             default:
                 return 0f;
         }
