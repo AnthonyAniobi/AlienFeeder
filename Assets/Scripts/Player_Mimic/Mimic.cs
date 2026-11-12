@@ -185,7 +185,9 @@ namespace MimicSpace
             newLeg.SetActive(true);
             Leg leg = newLeg.GetComponent<Leg>();
             leg.Initialize(footPosition, legResolution, maxLegDistance, growCoef, myMimic, lifeTime);
-            leg.SetMaterial(GetLegMaterial(vitality != null ? vitality.MimicLevel : MimicLevelEnum.child));
+            MimicLevelEnum level = vitality != null ? vitality.MimicLevel : MimicLevelEnum.child;
+            leg.SetMaterial(GetLegMaterial(level));
+            leg.SetColor(GetLevelColor(level));
             newLeg.transform.SetParent(myMimic.transform);
         }
 
@@ -314,12 +316,7 @@ namespace MimicSpace
                 _ => childScale
             };
 
-            Color levelColor = level switch
-            {
-                MimicLevelEnum.teen => teenColor,
-                MimicLevelEnum.adult => adultColor,
-                _ => childColor
-            };
+            Color levelColor = GetLevelColor(level);
 
             foreach (Renderer renderer in bodyRenderers ?? GetComponentsInChildren<Renderer>())
             {
@@ -330,7 +327,20 @@ namespace MimicSpace
             Material legMaterial = GetLegMaterial(level);
 
             foreach (Leg leg in GetComponentsInChildren<Leg>(true))
+            {
                 leg.SetMaterial(legMaterial);
+                leg.SetColor(levelColor);
+            }
+        }
+
+        private Color GetLevelColor(MimicLevelEnum level)
+        {
+            return level switch
+            {
+                MimicLevelEnum.teen => teenColor,
+                MimicLevelEnum.adult => adultColor,
+                _ => childColor
+            };
         }
 
         private Material GetLegMaterial(MimicLevelEnum level)

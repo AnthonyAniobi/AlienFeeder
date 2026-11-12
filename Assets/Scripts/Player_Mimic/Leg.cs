@@ -99,6 +99,13 @@ namespace MimicSpace
                 legLine.material = material;
         }
 
+        public void SetColor(Color color)
+        {
+            myColor = color;
+            if (legLine != null)
+                legLine.material.color = color;
+        }
+
         IEnumerator WaitToDie()
         {
             yield return new WaitForSeconds(minDuration);

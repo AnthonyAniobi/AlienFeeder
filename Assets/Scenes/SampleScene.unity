@@ -430,6 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2015d174f0624616ad7da93d1f7a076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EdibleController
+  edibleValue: 10
 --- !u!136 &569720199
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -999,10 +1000,20 @@ MonoBehaviour:
   edibleTag: Edible
   wallTag: Wall
   edibleDetectionRadius: 1
+  ediblePullDuration: 0.35
   wallCollisionRadius: 0.35
   wallCollisionHeight: 0.8
   wallCollisionPadding: 0.02
-  velocity: {x: -0.15629262, y: 0, z: 0.15694474}
+  childScale: {x: 1, y: 1, z: 1}
+  teenScale: {x: 1.25, y: 1.25, z: 1.25}
+  adultScale: {x: 1.5, y: 1.5, z: 1.5}
+  childColor: {r: 1, g: 1, b: 1, a: 1}
+  teenColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  adultColor: {r: 1, g: 0, b: 0, a: 1}
+  childLegMaterial: {fileID: 0}
+  teenLegMaterial: {fileID: 0}
+  adultLegMaterial: {fileID: 0}
+  velocity: {x: 0.30920324, y: 0, z: -0.7129438}
 --- !u!4 &8675915458144135929
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,6 +1061,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d4ba9fc65474b9bafbd1cd836bcd17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Vitality
+  health: 100
+  nutrition: 0
+  mimicLevel: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
