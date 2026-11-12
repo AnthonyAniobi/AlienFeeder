@@ -62,6 +62,7 @@ public class Mimic : MonoBehaviour
     [SerializeField] private Color childColor = Color.white;
     [SerializeField] private Color teenColor = Color.yellow;
     [SerializeField] private Color adultColor = Color.red;
+    [SerializeField] private Color bossColor = Color.black;
     [SerializeField] private Material childLegMaterial;
     [SerializeField] private Material teenLegMaterial;
     [SerializeField] private Material adultLegMaterial;
@@ -338,6 +339,7 @@ public class Mimic : MonoBehaviour
         {
             MimicLevelEnum.teen => teenColor,
             MimicLevelEnum.adult => adultColor,
+            MimicLevelEnum.boss => bossColor,
             _ => childColor
         };
     }
