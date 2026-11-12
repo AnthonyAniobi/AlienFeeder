@@ -68,6 +68,7 @@ public class Mimic : MonoBehaviour
     [SerializeField] private Material childLegMaterial;
     [SerializeField] private Material teenLegMaterial;
     [SerializeField] private Material adultLegMaterial;
+    [SerializeField] private Material bossLegMaterial;
 
     public GameObject AttachedEdible { get; private set; }
 
@@ -376,6 +377,7 @@ public class Mimic : MonoBehaviour
         {
             MimicLevelEnum.teen => teenLegMaterial,
             MimicLevelEnum.adult => adultLegMaterial,
+            MimicLevelEnum.boss => bossLegMaterial,
             _ => childLegMaterial
         };
     }
