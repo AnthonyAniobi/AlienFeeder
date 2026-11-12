@@ -51,22 +51,41 @@ namespace MimicSpace
         [SerializeField] private string edibleTag = "Edible";
         [SerializeField] private string wallTag = "Wall";
         [SerializeField] private float edibleDetectionRadius = 1f;
+        [SerializeField] private float ediblePullDuration = 0.35f;
         [SerializeField] private float wallCollisionRadius = 0.35f;
         [SerializeField] private float wallCollisionHeight = 0.8f;
         [SerializeField] private float wallCollisionPadding = 0.02f;
 
+        [Header("Mimic Levels")]
+        [SerializeField] private Vector3 childScale = Vector3.one;
+        [SerializeField] private Vector3 teenScale = new Vector3(1.25f, 1.25f, 1.25f);
+        [SerializeField] private Vector3 adultScale = new Vector3(1.5f, 1.5f, 1.5f);
+        [SerializeField] private Color childColor = Color.white;
+        [SerializeField] private Color teenColor = Color.yellow;
+        [SerializeField] private Color adultColor = Color.red;
+        [SerializeField] private Material childLegMaterial;
+        [SerializeField] private Material teenLegMaterial;
+        [SerializeField] private Material adultLegMaterial;
+
         public GameObject AttachedEdible { get; private set; }
 
         bool canCreateLeg = true;
+        bool isEating;
 
         List<GameObject> availableLegPool = new List<GameObject>();
+        Vitality vitality;
+        Renderer[] bodyRenderers;
 
         [Tooltip("This must be updates as the Mimin moves to assure great leg placement")]
         public Vector3 velocity;
 
         void Start()
         {
+            vitality = GetComponent<Vitality>();
+            bodyRenderers = GetComponentsInChildren<Renderer>();
             ResetMimic();
+            if (vitality != null)
+                ApplyMimicLevel(vitality.MimicLevel);
         }
 
         private void OnValidate()
@@ -164,7 +183,9 @@ namespace MimicSpace
                 newLeg = Instantiate(legPrefab, transform.position, Quaternion.identity);
             }
             newLeg.SetActive(true);
-            newLeg.GetComponent<Leg>().Initialize(footPosition, legResolution, maxLegDistance, growCoef, myMimic, lifeTime);
+            Leg leg = newLeg.GetComponent<Leg>();
+            leg.Initialize(footPosition, legResolution, maxLegDistance, growCoef, myMimic, lifeTime);
+            leg.SetMaterial(GetLegMaterial(vitality != null ? vitality.MimicLevel : MimicLevelEnum.child));
             newLeg.transform.SetParent(myMimic.transform);
         }
 
@@ -219,11 +240,14 @@ namespace MimicSpace
 
         public bool TryAttachEdible(GameObject edible)
         {
-            if (edible == null || !edible.CompareTag(edibleTag))
+            EdibleController edibleController = edible != null
+                ? edible.GetComponentInParent<EdibleController>()
+                : null;
+
+            if (edibleController == null || !edibleController.CompareTag(edibleTag) || isEating)
                 return false;
 
-            AttachedEdible = edible;
-            edible.transform.SetParent(transform, true);
+            StartCoroutine(ConsumeEdible(edibleController));
             return true;
         }
 
@@ -240,15 +264,83 @@ namespace MimicSpace
 
         private void TryAttachNearbyEdible()
         {
-            if (AttachedEdible != null)
+            if (AttachedEdible != null || isEating)
                 return;
 
             Collider[] colliders = Physics.OverlapSphere(transform.position, edibleDetectionRadius);
             foreach (Collider candidate in colliders)
             {
-                if (TryAttachEdible(candidate.gameObject))
+                EdibleController edible = candidate.GetComponentInParent<EdibleController>();
+                if (edible != null && TryAttachEdible(edible.gameObject))
+                {
                     return;
+                }
             }
+        }
+
+        private IEnumerator ConsumeEdible(EdibleController edible)
+        {
+            isEating = true;
+            AttachedEdible = edible.gameObject;
+            Transform edibleTransform = edible.transform;
+            Vector3 startPosition = edibleTransform.position;
+            float elapsed = 0f;
+
+            while (elapsed < ediblePullDuration && edibleTransform != null)
+            {
+                elapsed += Time.deltaTime;
+                float progress = ediblePullDuration <= 0f ? 1f : elapsed / ediblePullDuration;
+                edibleTransform.position = Vector3.Lerp(startPosition, transform.position, progress);
+                yield return null;
+            }
+
+            if (edible != null)
+            {
+                vitality ??= GetComponent<Vitality>();
+                vitality?.AddNutrition(edible.edibleValue);
+                Destroy(edible.gameObject);
+            }
+
+            AttachedEdible = null;
+            isEating = false;
+        }
+
+        public void ApplyMimicLevel(MimicLevelEnum level)
+        {
+            transform.localScale = level switch
+            {
+                MimicLevelEnum.teen => teenScale,
+                MimicLevelEnum.adult => adultScale,
+                _ => childScale
+            };
+
+            Color levelColor = level switch
+            {
+                MimicLevelEnum.teen => teenColor,
+                MimicLevelEnum.adult => adultColor,
+                _ => childColor
+            };
+
+            foreach (Renderer renderer in bodyRenderers ?? GetComponentsInChildren<Renderer>())
+            {
+                if (renderer.GetComponent<Leg>() == null)
+                    renderer.material.color = levelColor;
+            }
+
+            Material legMaterial = GetLegMaterial(level);
+
+            foreach (Leg leg in GetComponentsInChildren<Leg>(true))
+                leg.SetMaterial(legMaterial);
+        }
+
+        private Material GetLegMaterial(MimicLevelEnum level)
+        {
+            return level switch
+            {
+                MimicLevelEnum.teen => teenLegMaterial,
+                MimicLevelEnum.adult => adultLegMaterial,
+                _ => childLegMaterial
+            };
         }
 
         public void RecycleLeg(GameObject leg)

@@ -2,18 +2,41 @@ using UnityEngine;
 
 public class Vitality : MonoBehaviour
 {
-    public float health;
-    public float nutrition;
-    public MimicLevelEnum mimicLevel = 0;
-    void Start()
+    [SerializeField] private float health = 100f;
+    [SerializeField] private float nutrition;
+    [SerializeField] private MimicLevelEnum mimicLevel = MimicLevelEnum.child;
+
+    public float Health => health;
+    public float Nutrition => nutrition;
+    public MimicLevelEnum MimicLevel => mimicLevel;
+
+    private void Start()
     {
-        
+        UpdateMimicLevel();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddNutrition(float value)
     {
-        
+        if (value <= 0f)
+            return;
+
+        nutrition += value;
+        UpdateMimicLevel();
+    }
+
+    private void UpdateMimicLevel()
+    {
+        MimicLevelEnum newLevel = MimicLevelEnum.child;
+        if (nutrition >= MimicLevel.GetNutritionThreshold())
+            newLevel = MimicLevelEnum.adult;
+        else if (nutrition >= MimicLevel.GetNutritionThreshold())
+            newLevel = MimicLevelEnum.teen;
+
+        if (newLevel == mimicLevel)
+            return;
+
+        mimicLevel = newLevel;
+        GetComponent<MimicSpace.Mimic>()?.ApplyMimicLevel(mimicLevel);
     }
 }
 
@@ -27,7 +50,7 @@ public enum MimicLevelEnum
 
 public static class MimicLevel
 {
-    public static float GetNutritionThreshold(MimicLevelEnum level)
+    public static float GetNutritionThreshold(this MimicLevelEnum level)
     {
         switch (level)
         {

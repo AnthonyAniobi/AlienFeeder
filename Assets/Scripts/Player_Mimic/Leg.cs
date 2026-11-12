@@ -93,6 +93,12 @@ namespace MimicSpace
             Sethandles();
         }
 
+        public void SetMaterial(Material material)
+        {
+            if (material != null)
+                legLine.material = material;
+        }
+
         IEnumerator WaitToDie()
         {
             yield return new WaitForSeconds(minDuration);
