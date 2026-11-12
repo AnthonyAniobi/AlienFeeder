@@ -63,6 +63,8 @@ public class Mimic : MonoBehaviour
     [SerializeField] private Color teenColor = Color.yellow;
     [SerializeField] private Color adultColor = Color.red;
     [SerializeField] private Color bossColor = Color.black;
+    [Tooltip("Visual body root to scale. Leave empty to scale the mimic renderers without moving camera targets.")]
+    [SerializeField] private Transform levelVisualRoot;
     [SerializeField] private Material childLegMaterial;
     [SerializeField] private Material teenLegMaterial;
     [SerializeField] private Material adultLegMaterial;
@@ -75,6 +77,7 @@ public class Mimic : MonoBehaviour
     List<GameObject> availableLegPool = new List<GameObject>();
     Vitality vitality;
     Renderer[] bodyRenderers;
+    Vector3 levelVisualBaseScale = Vector3.one;
 
     [Tooltip("This must be updates as the Mimin moves to assure great leg placement")]
     public Vector3 velocity;
@@ -83,6 +86,7 @@ public class Mimic : MonoBehaviour
     {
         vitality = GetComponent<Vitality>();
         bodyRenderers = GetComponentsInChildren<Renderer>();
+        ResolveLevelVisualRoot();
         ResetMimic();
         if (vitality != null)
             ApplyMimicLevel(vitality.MimicLevel);
@@ -288,14 +292,14 @@ public class Mimic : MonoBehaviour
         Vector3 startPosition = edibleTransform.position;
         float elapsed = 0f;
 
-        while (elapsed < ediblePullDuration && edibleTransform != null)
-        {
-            elapsed += Time.deltaTime;
-            float progress = ediblePullDuration <= 0f ? 1f : elapsed / ediblePullDuration;
-            edibleTransform.position = Vector3.Lerp(startPosition, transform.position, progress);
-            yield return null;
-        }
-
+        // while (elapsed < ediblePullDuration && edibleTransform != null)
+        // {
+        //     elapsed += Time.deltaTime;
+        //     float progress = ediblePullDuration <= 0f ? 1f : elapsed / ediblePullDuration;
+        //     edibleTransform.position = Vector3.Lerp(startPosition, transform.position, progress);
+        //     yield return null;
+        // }
+        yield return null;
         if (edible != null)
         {
             vitality ??= GetComponent<Vitality>();
@@ -309,12 +313,15 @@ public class Mimic : MonoBehaviour
 
     public void ApplyMimicLevel(MimicLevelEnum level)
     {
-        transform.localScale = level switch
+        Vector3 levelScale = level switch
         {
             MimicLevelEnum.teen => teenScale,
             MimicLevelEnum.adult => adultScale,
             _ => childScale
         };
+
+        if (levelVisualRoot != null)
+            levelVisualRoot.localScale = Vector3.Scale(levelVisualBaseScale, levelScale);
 
         Color levelColor = GetLevelColor(level);
 
@@ -330,6 +337,25 @@ public class Mimic : MonoBehaviour
         {
             leg.SetMaterial(legMaterial);
             leg.SetColor(levelColor);
+        }
+    }
+
+    private void ResolveLevelVisualRoot()
+    {
+        if (levelVisualRoot != null)
+        {
+            levelVisualBaseScale = levelVisualRoot.localScale;
+            return;
+        }
+
+        foreach (Renderer renderer in bodyRenderers)
+        {
+            if (renderer.GetComponent<Leg>() == null)
+            {
+                levelVisualRoot = renderer.transform;
+                levelVisualBaseScale = levelVisualRoot.localScale;
+                return;
+            }
         }
     }
 

@@ -31,8 +31,8 @@ public class Vitality : MonoBehaviour
             int nextLevel = (int)mimicLevel + 1;
             mimicLevel = (MimicLevelEnum)nextLevel;
             nutrition = 0f;
+            GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
         }
-        GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
     }
 }
 
