@@ -31,7 +31,14 @@ namespace MimicSpace
             // Assigning velocity to the mimic to assure great leg placement
             myMimic.velocity = velocity;
 
-            transform.position = transform.position + velocity * Time.deltaTime;
+            Vector3 movement = velocity * Time.deltaTime;
+            if (myMimic.IsWallBlocking(movement))
+                velocity = Vector3.zero;
+            else
+                transform.position += movement;
+
+            // A blocked mimic must report zero velocity so its legs do not step through the wall.
+            myMimic.velocity = velocity;
             Vector3 destHeight = transform.position;
             if (myMimic.TryGetGroundPoint(transform.position, out Vector3 groundPoint))
                 destHeight = new Vector3(transform.position.x, groundPoint.y + height, transform.position.z);

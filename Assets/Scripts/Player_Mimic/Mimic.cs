@@ -49,7 +49,11 @@ namespace MimicSpace
         [Header("Surface and Food")]
         [SerializeField] private string groundTag = "Ground";
         [SerializeField] private string edibleTag = "Edible";
+        [SerializeField] private string wallTag = "Wall";
         [SerializeField] private float edibleDetectionRadius = 1f;
+        [SerializeField] private float wallCollisionRadius = 0.35f;
+        [SerializeField] private float wallCollisionHeight = 0.8f;
+        [SerializeField] private float wallCollisionPadding = 0.02f;
 
         public GameObject AttachedEdible { get; private set; }
 
@@ -180,6 +184,37 @@ namespace MimicSpace
             }
 
             return closestDistance < float.MaxValue;
+        }
+
+        public bool IsWallBlocking(Vector3 movement)
+        {
+            Vector3 horizontalMovement = new Vector3(movement.x, 0, movement.z);
+            float distance = horizontalMovement.magnitude;
+            if (distance <= 0f)
+                return false;
+
+            float radius = Mathf.Max(0.01f, wallCollisionRadius);
+            float height = Mathf.Max(radius * 2f, wallCollisionHeight);
+            Vector3 capsuleBottom = transform.position + Vector3.up * radius;
+            Vector3 capsuleTop = transform.position + Vector3.up * (height - radius);
+            RaycastHit[] hits = Physics.CapsuleCastAll(
+                capsuleBottom,
+                capsuleTop,
+                radius,
+                horizontalMovement / distance,
+                distance + wallCollisionPadding);
+
+            foreach (RaycastHit hit in hits)
+            {
+                Transform hitTransform = hit.collider.transform;
+                if (hitTransform == transform || hitTransform.IsChildOf(transform))
+                    continue;
+
+                if (hit.collider.CompareTag(wallTag))
+                    return true;
+            }
+
+            return false;
         }
 
         public bool TryAttachEdible(GameObject edible)
