@@ -301,11 +301,36 @@ public class Mimic : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, enemyDetectionRadius);
         foreach (Collider candidate in colliders)
         {
+
+
+
+            // EnemyController enemyController = enemy.GetComponentInParent<EnemyController>();
+            // vitality ??= GetComponent<Vitality>();
+            // bool canBeChased = enemyController != null && enemyController.canChasePlayer;
+            // if (canBeChased && vitality != null && enemy.power > vitality.vitalityValue)
+            // {
+            //     enemyController.SetPlayerTransform(transform);
+            //     continue;
+            // }
+
+            // StartCoroutine(ConsumeEnemy(enemy));
+            // return;
+
+
+
+
             EnemyAttack enemy = candidate.GetComponentInParent<EnemyAttack>();
             if (enemy != null)
             {
                 EnemyController enemyController = enemy.GetComponentInParent<EnemyController>();
-                if (enemyController != null && enemyController.canChasePlayer)
+                EnemyAttack enemyAttack = enemy.GetComponent<EnemyAttack>();
+                vitality ??= GetComponent<Vitality>();
+                bool canBeChased = enemyController != null && enemyController.canChasePlayer;
+
+                if (
+                    canBeChased
+                    // && vitality.vitalityValue < enemyAttack.power
+                    )
                 {
                     enemyController.SetPlayerTransform(transform);
                     continue;
