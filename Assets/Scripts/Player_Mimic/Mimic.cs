@@ -56,6 +56,7 @@ public class Mimic : MonoBehaviour
     [SerializeField] private float wallCollisionPadding = 0.02f;
 
     [Header("Mimic Levels")]
+    [SerializeField] private MeshRenderer mimicBodyRenderer;
     [SerializeField] private Vector3 childScale = Vector3.one;
     [SerializeField] private Vector3 teenScale = new Vector3(1.25f, 1.25f, 1.25f);
     [SerializeField] private Vector3 adultScale = new Vector3(1.5f, 1.5f, 1.5f);
@@ -344,11 +345,13 @@ public class Mimic : MonoBehaviour
 
         Color levelColor = GetLevelColor(level);
 
-        foreach (Renderer renderer in bodyRenderers ?? GetComponentsInChildren<Renderer>())
-        {
-            if (renderer.GetComponent<Leg>() == null)
-                renderer.material.color = levelColor;
-        }
+        mimicBodyRenderer.material.color = levelColor;
+
+        // foreach (Renderer renderer in bodyRenderers ?? GetComponentsInChildren<Renderer>())
+        // {
+        //     if (renderer.GetComponent<Leg>() == null)
+        //         renderer.material.color = levelColor;
+        // }
 
         Material legMaterial = GetLegMaterial(level);
 
