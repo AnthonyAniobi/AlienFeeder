@@ -5242,7 +5242,7 @@ MonoBehaviour:
   teenLegMaterial: {fileID: 2100000, guid: 247733efc65ac4b70a7bc74a2ca5745e, type: 2}
   adultLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
   bossLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
-  velocity: {x: 0.60210115, y: 0, z: 0.66644096}
+  velocity: {x: -0.4195782, y: 0, z: 0.163319}
 --- !u!4 &8675915458144135929
 Transform:
   m_ObjectHideFlags: 0
