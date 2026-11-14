@@ -356,8 +356,12 @@ public class Mimic : MonoBehaviour
         if (enemy != null)
         {
             vitality ??= GetComponent<Vitality>();
-            if (vitality != null && vitality.ResolveEnemyContact(enemy, enemyPushbackDistance))
+            bool enemyAbsorbed = vitality != null &&
+                vitality.ResolveEnemyContact(enemy, enemyPushbackDistance);
+            if (enemyAbsorbed)
                 Destroy(enemy.gameObject);
+            else
+                ShowFloatingPowerupText(enemy.power, false);
         }
 
         isEating = false;

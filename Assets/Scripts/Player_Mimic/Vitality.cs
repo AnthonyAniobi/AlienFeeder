@@ -108,7 +108,6 @@ public class Vitality : MonoBehaviour
             currentNutrition = 0f;
         }
 
-        GetComponent<Mimic>()?.ShowFloatingPowerupText(value, false);
         UpdateSliders();
     }
 
