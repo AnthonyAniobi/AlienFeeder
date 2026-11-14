@@ -1647,6 +1647,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1766648937}
   - component: {fileID: 1766648938}
+  - component: {fileID: 1766648941}
+  - component: {fileID: 1766648940}
+  - component: {fileID: 1766648939}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1695,6 +1698,45 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1766648939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766648936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1bdde1028f7c4616bc077eab76dadab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+--- !u!114 &1766648940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766648936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a0fa77e2a12f46b98188cfd68c11522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLookout
+  lookoutDistance: 10
+  eyeTransform: {fileID: 0}
+  eyeRadius: 0.5
+--- !u!114 &1766648941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766648936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d158dcdc1173d49c08516f8d469eef58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
 --- !u!1 &1813269051
 GameObject:
   m_ObjectHideFlags: 0
@@ -5200,7 +5242,7 @@ MonoBehaviour:
   teenLegMaterial: {fileID: 2100000, guid: 247733efc65ac4b70a7bc74a2ca5745e, type: 2}
   adultLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
   bossLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
-  velocity: {x: -0.7498941, y: 0, z: -0.16311496}
+  velocity: {x: 0.5313, y: 0, z: -0.70403975}
 --- !u!4 &8675915458144135929
 Transform:
   m_ObjectHideFlags: 0
