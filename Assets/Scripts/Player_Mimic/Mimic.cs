@@ -70,6 +70,9 @@ public class Mimic : MonoBehaviour
     [SerializeField] private Material adultLegMaterial;
     [SerializeField] private Material bossLegMaterial;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject floatingPowerupTextPrefab;
+
     public GameObject AttachedEdible { get; private set; }
 
     bool canCreateLeg = true;
@@ -305,6 +308,23 @@ public class Mimic : MonoBehaviour
         {
             vitality ??= GetComponent<Vitality>();
             vitality?.AddNutrition(edible.edibleValue);
+            // Show floating text effect
+            if (floatingPowerupTextPrefab != null)
+            {
+                GameObject floatingTextObj = Instantiate(
+                    floatingPowerupTextPrefab, 
+                    transform.position, 
+                    Quaternion.identity,
+                    transform
+                );
+                floatingTextObj.transform.localPosition = Vector3.zero;
+                FloatingPowerupText floatingText = floatingTextObj.GetComponent<FloatingPowerupText>();
+                if (floatingText != null)
+                {
+                    floatingText.SetText($"+{edible.edibleValue}");
+                    floatingText.ShowAnimation();
+                }
+            }
             Destroy(edible.gameObject);
         }
 
