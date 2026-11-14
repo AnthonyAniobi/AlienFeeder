@@ -314,10 +314,8 @@ public class Mimic : MonoBehaviour
                 GameObject floatingTextObj = Instantiate(
                     floatingPowerupTextPrefab, 
                     transform.position, 
-                    Quaternion.identity,
-                    transform
+                    Quaternion.identity
                 );
-                floatingTextObj.transform.localPosition = Vector3.zero;
                 FloatingPowerupText floatingText = floatingTextObj.GetComponent<FloatingPowerupText>();
                 if (floatingText != null)
                 {

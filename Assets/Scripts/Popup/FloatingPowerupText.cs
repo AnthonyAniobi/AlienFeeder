@@ -10,8 +10,6 @@ public class FloatingPowerupText : MonoBehaviour
     public void SetText(string message)
     {
         text.text = message;
-        // reset the position and scale of the text
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         transform.localScale = Vector3.one;
         canvasGroup.alpha = 1f; // Reset alpha to fully visible
     }

@@ -266,6 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26531b8ed0d8a49a6acdb7571f9253a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingPowerupText
-  targetHeight: 1
+  targetHeight: 2
   text: {fileID: 2839609975698100557}
   canvasGroup: {fileID: 8615858040092921771}
