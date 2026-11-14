@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 127628750}
   - component: {fileID: 127628751}
   m_Layer: 0
-  m_Name: Slider (1)
+  m_Name: Nutrition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1722,8 +1722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0fa77e2a12f46b98188cfd68c11522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLookout
-  lookoutDistance: 10
-  eyeTransform: {fileID: 0}
+  lookoutDistance: 6
+  eyeTransform: {fileID: 1951298559}
   eyeRadius: 0.5
 --- !u!114 &1766648941
 MonoBehaviour:
@@ -5242,7 +5242,7 @@ MonoBehaviour:
   teenLegMaterial: {fileID: 2100000, guid: 247733efc65ac4b70a7bc74a2ca5745e, type: 2}
   adultLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
   bossLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
-  velocity: {x: 0.5313, y: 0, z: -0.70403975}
+  velocity: {x: 0.60210115, y: 0, z: 0.66644096}
 --- !u!4 &8675915458144135929
 Transform:
   m_ObjectHideFlags: 0
@@ -5291,9 +5291,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d4ba9fc65474b9bafbd1cd836bcd17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Vitality
-  health: 100
+  maxHealth: 100
+  maxNutrition: 100
   nutrition: 0
   mimicLevel: 0
+  healthBarSlider: {fileID: 249554455}
+  nutritionBarSlider: {fileID: 127628751}
+  healthBarFillImage: {fileID: 466114076}
+  nutritionBarFillImage: {fileID: 1907211354}
 --- !u!4 &8786108349331930541
 Transform:
   m_ObjectHideFlags: 0

@@ -1,18 +1,34 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Vitality : MonoBehaviour
 {
-    [SerializeField] private float health = 100f;
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float maxNutrition = 100f;
     [SerializeField] private float nutrition;
     [SerializeField] private MimicLevelEnum mimicLevel = MimicLevelEnum.child;
+    [SerializeField] private Slider healthBarSlider;
+    [SerializeField] private Slider nutritionBarSlider;
+    [SerializeField] private Image healthBarFillImage;
+    [SerializeField] private Image nutritionBarFillImage;
 
-    public float Health => health;
-    public float Nutrition => nutrition;
     public MimicLevelEnum MimicLevel => mimicLevel;
+    private float currentHealth;
+    private float currentNutrition;
 
     private void Start()
     {
         UpdateMimicLevel();
+        Initialize(maxHealth, maxNutrition);
+    }
+
+    public void Initialize(float health, float nutrition)
+    {
+        maxHealth = health;
+        maxNutrition = nutrition;
+        currentHealth = maxHealth;
+        currentNutrition = maxNutrition;
+        UpdateSliders();
     }
 
     public void AddNutrition(float value)
@@ -33,6 +49,21 @@ public class Vitality : MonoBehaviour
             nutrition = 0f;
             GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
         }
+    }
+
+    private void UpdateSliders()
+    {
+        if (healthBarSlider != null)
+        {
+            healthBarSlider.value = currentHealth / maxHealth;
+        }
+
+        if (nutritionBarSlider != null)
+        {
+            nutritionBarSlider.value = currentNutrition / maxNutrition;
+        }
+        nutritionBarFillImage.color = Color.Lerp(Color.red, Color.green, currentNutrition / maxNutrition);
+        healthBarFillImage.color = Color.Lerp(Color.red, Color.green, currentHealth / maxHealth);
     }
 }
 
