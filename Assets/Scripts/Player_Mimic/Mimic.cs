@@ -63,6 +63,7 @@ public class Mimic : MonoBehaviour
     [SerializeField] private Vector3 childScale = Vector3.one;
     [SerializeField] private Vector3 teenScale = new Vector3(1.25f, 1.25f, 1.25f);
     [SerializeField] private Vector3 adultScale = new Vector3(1.5f, 1.5f, 1.5f);
+    [SerializeField] private Vector3 bossScale = new Vector3(2f, 2f, 2f);
     [SerializeField] private Color childColor = Color.white;
     [SerializeField] private Color teenColor = Color.yellow;
     [SerializeField] private Color adultColor = Color.red;
@@ -301,24 +302,6 @@ public class Mimic : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, enemyDetectionRadius);
         foreach (Collider candidate in colliders)
         {
-
-
-
-            // EnemyController enemyController = enemy.GetComponentInParent<EnemyController>();
-            // vitality ??= GetComponent<Vitality>();
-            // bool canBeChased = enemyController != null && enemyController.canChasePlayer;
-            // if (canBeChased && vitality != null && enemy.power > vitality.vitalityValue)
-            // {
-            //     enemyController.SetPlayerTransform(transform);
-            //     continue;
-            // }
-
-            // StartCoroutine(ConsumeEnemy(enemy));
-            // return;
-
-
-
-
             EnemyAttack enemy = candidate.GetComponentInParent<EnemyAttack>();
             if (enemy != null)
             {
@@ -423,6 +406,7 @@ public class Mimic : MonoBehaviour
         {
             MimicLevelEnum.teen => teenScale,
             MimicLevelEnum.adult => adultScale,
+            MimicLevelEnum.boss => bossScale,
             _ => childScale
         };
 
