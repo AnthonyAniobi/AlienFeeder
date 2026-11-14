@@ -53,6 +53,14 @@ public class Vitality : MonoBehaviour
 
         TakeDamage(enemy.attackDamage);
 
+        return vitalityValue > enemy.power;
+    }
+
+    public bool ResolveEnemyContact(EnemyAttack enemy, float pushbackDistance)
+    {
+        if (enemy == null)
+            return false;
+
         if (vitalityValue > enemy.power)
         {
             AddNutrition(enemy.vitalityValue);
@@ -61,6 +69,13 @@ public class Vitality : MonoBehaviour
         }
 
         RemoveNutrition(enemy.power);
+        TakeDamage(enemy.attackDamage);
+
+        Vector3 pushDirection = transform.position - enemy.transform.position;
+        pushDirection.y = 0f;
+        if (pushDirection.sqrMagnitude > 0f)
+            transform.position += pushDirection.normalized * pushbackDistance;
+
         return false;
     }
 

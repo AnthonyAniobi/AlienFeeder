@@ -51,6 +51,9 @@ public class Mimic : MonoBehaviour
     [SerializeField] private string wallTag = "Wall";
     [SerializeField] private float edibleDetectionRadius = 1f;
     [SerializeField] private float ediblePullDuration = 0.35f;
+    [SerializeField] private float enemyDetectionRadius = 1f;
+    [SerializeField] private float enemyPullDuration = 0.35f;
+    [SerializeField] private float enemyPushbackDistance = 1f;
     [SerializeField] private float wallCollisionRadius = 0.35f;
     [SerializeField] private float wallCollisionHeight = 0.8f;
     [SerializeField] private float wallCollisionPadding = 0.02f;
@@ -131,6 +134,7 @@ public class Mimic : MonoBehaviour
     void Update()
     {
         TryAttachNearbyEdible();
+        TryAttachNearbyEnemy();
 
         if (!canCreateLeg)
             return;
@@ -289,6 +293,23 @@ public class Mimic : MonoBehaviour
         }
     }
 
+    private void TryAttachNearbyEnemy()
+    {
+        if (AttachedEdible != null || isEating)
+            return;
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, enemyDetectionRadius);
+        foreach (Collider candidate in colliders)
+        {
+            EnemyAttack enemy = candidate.GetComponentInParent<EnemyAttack>();
+            if (enemy != null)
+            {
+                StartCoroutine(ConsumeEnemy(enemy));
+                return;
+            }
+        }
+    }
+
     private IEnumerator ConsumeEdible(EdibleController edible)
     {
         isEating = true;
@@ -314,6 +335,31 @@ public class Mimic : MonoBehaviour
         }
 
         AttachedEdible = null;
+        isEating = false;
+    }
+
+    private IEnumerator ConsumeEnemy(EnemyAttack enemy)
+    {
+        isEating = true;
+        Transform enemyTransform = enemy.transform;
+        Vector3 startPosition = enemyTransform.position;
+        float elapsed = 0f;
+
+        while (elapsed < enemyPullDuration && enemyTransform != null)
+        {
+            elapsed += Time.deltaTime;
+            float progress = enemyPullDuration <= 0f ? 1f : elapsed / enemyPullDuration;
+            enemyTransform.position = Vector3.Lerp(startPosition, transform.position, progress);
+            yield return null;
+        }
+
+        if (enemy != null)
+        {
+            vitality ??= GetComponent<Vitality>();
+            if (vitality != null && vitality.ResolveEnemyContact(enemy, enemyPushbackDistance))
+                Destroy(enemy.gameObject);
+        }
+
         isEating = false;
     }
 

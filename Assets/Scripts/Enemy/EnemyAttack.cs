@@ -20,8 +20,7 @@ public class EnemyAttack : MonoBehaviour
             if (hitCollider.CompareTag("Player"))
             {
                 Vitality targetVitality = hitCollider.GetComponentInParent<Vitality>();
-                if (targetVitality != null && targetVitality.ReceiveEnemyAttack(this))
-                    Destroy(gameObject);
+                targetVitality?.TakeDamage(attackDamage);
 
                 break;
             }
