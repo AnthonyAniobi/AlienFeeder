@@ -18,7 +18,7 @@ TagManager:
   - UI
   - Edible
   - Enemy
-  - 
+  - NonCameraCollidable
   - 
   - 
   - 
