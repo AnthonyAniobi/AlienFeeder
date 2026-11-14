@@ -6978,6 +6978,9 @@ MonoBehaviour:
   wallTag: Wall
   edibleDetectionRadius: 1.6
   ediblePullDuration: 0.35
+  enemyDetectionRadius: 2
+  enemyPullDuration: 0.35
+  enemyPushbackDistance: 3
   wallCollisionRadius: 0.35
   wallCollisionHeight: 0.8
   wallCollisionPadding: 0.02
@@ -6995,7 +6998,7 @@ MonoBehaviour:
   adultLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
   bossLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
   floatingPowerupTextPrefab: {fileID: 6419237037296349417, guid: 21f6dca1c296840dbb44b0230ed82de5, type: 3}
-  velocity: {x: 0.2622201, y: 0, z: 0.03625046}
+  velocity: {x: -0.1518935, y: 0, z: -0.5360669}
 --- !u!4 &8675915458144135929
 Transform:
   m_ObjectHideFlags: 0

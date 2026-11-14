@@ -5,7 +5,7 @@ public class EnemyController : MonoBehaviour
     
     //
     private Transform playerTransform; // reference to player's transform when found
-    private Vector2 move;
+    internal Vector2 move;
     
     void Update()
     {
