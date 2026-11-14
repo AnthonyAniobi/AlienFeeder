@@ -309,26 +309,30 @@ public class Mimic : MonoBehaviour
         {
             vitality ??= GetComponent<Vitality>();
             vitality?.AddNutrition(edible.edibleValue);
-            // Show floating text effect
-            if (floatingPowerupTextPrefab != null)
-            {
-                GameObject floatingTextObj = Instantiate(
-                    floatingPowerupTextPrefab, 
-                    transform.position, 
-                    Quaternion.identity
-                );
-                FloatingPowerupText floatingText = floatingTextObj.GetComponent<FloatingPowerupText>();
-                if (floatingText != null)
-                {
-                    floatingText.SetText($"{edible.edibleValue}", true);
-                    floatingText.ShowAnimation();
-                }
-            }
+            ShowFloatingPowerupText(edible.edibleValue, true);
             Destroy(edible.gameObject);
         }
 
         AttachedEdible = null;
         isEating = false;
+    }
+
+    public void ShowFloatingPowerupText(float value, bool isPositive)
+    {
+        if (floatingPowerupTextPrefab == null)
+            return;
+
+        GameObject floatingTextObj = Instantiate(
+            floatingPowerupTextPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+        FloatingPowerupText floatingText = floatingTextObj.GetComponent<FloatingPowerupText>();
+        if (floatingText != null)
+        {
+            floatingText.SetText($"{Mathf.Abs(value)}", isPositive);
+            floatingText.ShowAnimation();
+        }
     }
 
     public void ApplyMimicLevel(MimicLevelEnum level)

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +10,15 @@ public class Vitality : MonoBehaviour
     [SerializeField] private Slider nutritionBarSlider;
     [SerializeField] private Image healthBarFillImage;
     [SerializeField] private Image nutritionBarFillImage;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI nutritionText;
 
     private float maxNutrition;
     public MimicLevelEnum MimicLevel => mimicLevel;
     private float currentHealth;
     private float currentNutrition;
+
+    public float vitalityValue => mimicLevel.GetNutritionThreshold() + currentNutrition;
 
     private void Start()
     {
@@ -41,11 +46,65 @@ public class Vitality : MonoBehaviour
         UpdateSliders();
     }
 
+    public bool ReceiveEnemyAttack(EnemyAttack enemy)
+    {
+        if (enemy == null)
+            return false;
+
+        TakeDamage(enemy.attackDamage);
+
+        if (vitalityValue > enemy.power)
+        {
+            AddNutrition(enemy.vitalityValue);
+            GetComponent<Mimic>()?.ShowFloatingPowerupText(enemy.vitalityValue, true);
+            return true;
+        }
+
+        RemoveNutrition(enemy.power);
+        return false;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (damage <= 0f)
+            return;
+
+        currentHealth = Mathf.Max(0f, currentHealth - damage);
+        UpdateSliders();
+    }
+
+    private void RemoveNutrition(float value)
+    {
+        if (value <= 0f)
+            return;
+
+        currentNutrition -= value;
+        while (currentNutrition < 0f && mimicLevel > MimicLevelEnum.child)
+        {
+            mimicLevel--;
+            currentNutrition += mimicLevel.GetNutritionThreshold();
+            maxNutrition = mimicLevel.GetNutritionThreshold();
+            GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
+        }
+
+        if (currentNutrition < 0f)
+        {
+            TakeDamage(-currentNutrition);
+            currentNutrition = 0f;
+        }
+
+        GetComponent<Mimic>()?.ShowFloatingPowerupText(value, false);
+        UpdateSliders();
+    }
+
     private void UpdateMimicLevel()
     {
         
         if (currentNutrition >= mimicLevel.GetNutritionThreshold()){
             int nextLevel = (int)mimicLevel + 1;
+            if (nextLevel > (int)MimicLevelEnum.boss)
+                return;
+
             mimicLevel = (MimicLevelEnum)nextLevel;
             currentNutrition = 0f;
             maxNutrition = mimicLevel.GetNutritionThreshold();
@@ -64,8 +123,15 @@ public class Vitality : MonoBehaviour
         {
             nutritionBarSlider.value = currentNutrition / maxNutrition;
         }
-        nutritionBarFillImage.color = Color.Lerp(Color.blue, Color.purple, currentNutrition / maxNutrition);
-        healthBarFillImage.color = Color.Lerp(Color.yellow, Color.green, currentHealth / maxHealth);
+        if (nutritionBarFillImage != null)
+            nutritionBarFillImage.color = Color.Lerp(Color.blue, Color.purple, currentNutrition / maxNutrition);
+        if (healthBarFillImage != null)
+            healthBarFillImage.color = Color.Lerp(Color.yellow, Color.green, currentHealth / maxHealth);
+
+        if (nutritionText != null)
+            nutritionText.text = $"{vitalityValue}";
+        if (healthText != null)
+            healthText.text = $"{currentHealth}/{maxHealth}";
     }
 }
 
@@ -91,7 +157,7 @@ public static class MimicLevel
             case MimicLevelEnum.adult:
                 return 30f;
             case MimicLevelEnum.boss:
-                return float.MaxValue;
+                return 100f;
             default:
                 return 0f;
         }
