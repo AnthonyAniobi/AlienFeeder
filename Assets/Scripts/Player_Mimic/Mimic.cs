@@ -319,7 +319,7 @@ public class Mimic : MonoBehaviour
                 FloatingPowerupText floatingText = floatingTextObj.GetComponent<FloatingPowerupText>();
                 if (floatingText != null)
                 {
-                    floatingText.SetText($"+{edible.edibleValue}");
+                    floatingText.SetText($"{edible.edibleValue}", true);
                     floatingText.ShowAnimation();
                 }
             }

@@ -6,12 +6,16 @@ public class FloatingPowerupText : MonoBehaviour
     [SerializeField] private float targetHeight = 1f;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Canvas canvas;
+
     
-    public void SetText(string message)
+    public void SetText(string message, bool isPositive)
     {
-        text.text = message;
+        text.text = $"{(isPositive ? "+" : "-")}{message}";
         transform.localScale = Vector3.one;
         canvasGroup.alpha = 1f; // Reset alpha to fully visible
+        canvas.worldCamera = Camera.main; // Set the canvas to use the main camera
+        text.color = isPositive ? Color.gold : Color.red;
     }
 
     // Update is called once per frame

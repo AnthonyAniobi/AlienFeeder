@@ -4,14 +4,13 @@ using UnityEngine.UI;
 public class Vitality : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float maxNutrition = 100f;
-    [SerializeField] private float nutrition;
     [SerializeField] private MimicLevelEnum mimicLevel = MimicLevelEnum.child;
     [SerializeField] private Slider healthBarSlider;
     [SerializeField] private Slider nutritionBarSlider;
     [SerializeField] private Image healthBarFillImage;
     [SerializeField] private Image nutritionBarFillImage;
 
+    private float maxNutrition;
     public MimicLevelEnum MimicLevel => mimicLevel;
     private float currentHealth;
     private float currentNutrition;
@@ -27,7 +26,8 @@ public class Vitality : MonoBehaviour
         maxHealth = health;
         maxNutrition = nutrition;
         currentHealth = maxHealth;
-        currentNutrition = maxNutrition;
+        maxNutrition = mimicLevel.GetNutritionThreshold();
+        currentNutrition = 0;
         UpdateSliders();
     }
 
@@ -36,17 +36,19 @@ public class Vitality : MonoBehaviour
         if (value <= 0f)
             return;
 
-        nutrition += value;
+        currentNutrition += value;
         UpdateMimicLevel();
+        UpdateSliders();
     }
 
     private void UpdateMimicLevel()
     {
         
-        if (nutrition >= mimicLevel.GetNutritionThreshold()){
+        if (currentNutrition >= mimicLevel.GetNutritionThreshold()){
             int nextLevel = (int)mimicLevel + 1;
             mimicLevel = (MimicLevelEnum)nextLevel;
-            nutrition = 0f;
+            currentNutrition = 0f;
+            maxNutrition = mimicLevel.GetNutritionThreshold();
             GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
         }
     }
@@ -62,8 +64,8 @@ public class Vitality : MonoBehaviour
         {
             nutritionBarSlider.value = currentNutrition / maxNutrition;
         }
-        nutritionBarFillImage.color = Color.Lerp(Color.red, Color.green, currentNutrition / maxNutrition);
-        healthBarFillImage.color = Color.Lerp(Color.red, Color.green, currentHealth / maxHealth);
+        nutritionBarFillImage.color = Color.Lerp(Color.blue, Color.purple, currentNutrition / maxNutrition);
+        healthBarFillImage.color = Color.Lerp(Color.yellow, Color.green, currentHealth / maxHealth);
     }
 }
 
