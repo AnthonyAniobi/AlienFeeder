@@ -7100,7 +7100,7 @@ MonoBehaviour:
   adultLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
   bossLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
   floatingPowerupTextPrefab: {fileID: 6419237037296349417, guid: 21f6dca1c296840dbb44b0230ed82de5, type: 3}
-  velocity: {x: 0.33126912, y: 0, z: -0.47206205}
+  velocity: {x: -0.38504744, y: 0, z: -0.13943022}
 --- !u!4 &8675915458144135929
 Transform:
   m_ObjectHideFlags: 0
