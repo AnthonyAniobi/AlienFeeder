@@ -5,6 +5,7 @@ public class EnemyLookout : MonoBehaviour
     [SerializeField] private float lookoutDistance = 10f;
     [SerializeField] private Transform eyeTransform;
     [SerializeField] private float eyeRadius = 0.5f;
+    [SerializeField] private float wallOffsetDistance = 1f;
 
     private Transform playerTransform;
     
@@ -20,6 +21,7 @@ public class EnemyLookout : MonoBehaviour
                     if(playerTransform == null)
                     {
                         playerTransform = hitInfo.collider.transform;
+                        GetComponent<EnemyController>().SetPlayerTransform(playerTransform);
                         Debug.Log("Mimic detected!");
                     }
                 }

@@ -17,4 +17,9 @@ public class EnemyController : MonoBehaviour
             move = new Vector2(playerTransform.position.x - transform.position.x, playerTransform.position.z - transform.position.z).normalized;
         }
     }
+
+    public void SetPlayerTransform(Transform player)
+    {
+        playerTransform = player;
+    }
 }

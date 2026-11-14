@@ -304,6 +304,13 @@ public class Mimic : MonoBehaviour
             EnemyAttack enemy = candidate.GetComponentInParent<EnemyAttack>();
             if (enemy != null)
             {
+                EnemyController enemyController = enemy.GetComponentInParent<EnemyController>();
+                if (enemyController != null && enemyController.canChasePlayer)
+                {
+                    enemyController.SetPlayerTransform(transform);
+                    continue;
+                }
+
                 StartCoroutine(ConsumeEnemy(enemy));
                 return;
             }
