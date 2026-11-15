@@ -10,3 +10,6 @@ A game where the alien goes arround eating different things until the alien is f
 - Pixel UI Sci-Fi: https://assetstore.unity.com/packages/2d/gui/pixel-ui-sci-fi-free-hud-kit-sampler-412096
 - Poly Angel Space Pack: https://assetstore.unity.com/packages/3d/vehicles/space/poly-angel-space-pack-267010
 - Music Loops Miniset: https://assetstore.unity.com/packages/audio/music/music-loops-mini-set-70967
+- Joystick: https://assetstore.unity.com/packages/tools/input-management/joystick-pack-107631
+- Sand Materials: https://assetstore.unity.com/packages/2d/textures-materials/nature/yughues-free-sand-materials-12964
+
