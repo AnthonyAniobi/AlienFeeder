@@ -3,17 +3,24 @@ using UnityEngine;
 public class EdibleData
 {
     public Vector3 position;
-    public float value;
+    public EdibleType type;
 
-    public EdibleData(Vector3 position, float value)
+    public EdibleData(Vector3 position, EdibleType type)
     {
         this.position = position;
-        this.value = value;
+        this.type = type;
     }
 
-    public EdibleData(float x, float y, float value)
+    public EdibleData(float x, float y, EdibleType type)
     {
         position = new Vector3(x, 1, y);
-        this.value = value;
+        this.type = type;
     }
+}
+
+
+public enum EdibleType
+{
+    Apple,
+    Banana
 }

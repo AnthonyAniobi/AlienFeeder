@@ -15,7 +15,7 @@ public class EnemyData
         this.isMoving = isMoving;
     }
 
-    public EnemyData(float x, float y, float power, float damage)
+    public EnemyData(float x, float y, float power, float damage, bool isMoving)
     {
         this.position = new Vector3(x, 1, y);
         this.power = power;

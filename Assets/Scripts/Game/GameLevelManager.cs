@@ -1,0 +1,63 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameLevelManager : MonoBehaviour
+{
+    
+    public GameObject playerPrefab;
+    public GameObject enemyPrefab;
+    public GameObject ediblePrefab;
+
+
+    // 
+    private GameObject playerInstance;
+    private List<GameObject> enemyInstances = new List<GameObject>();
+    private List<GameObject> edibleInstances = new List<GameObject>();
+
+    void Start()
+    {
+        StartLevel(1);
+    }
+
+    public void StartLevel(int levelNumber)
+    {
+        // Clear previous level instances
+        if (playerInstance != null)
+        {
+            Destroy(playerInstance);
+        }
+        foreach (var enemy in enemyInstances)
+        {
+            Destroy(enemy);
+        }
+        enemyInstances.Clear();
+        foreach (var edible in edibleInstances)
+        {
+            Destroy(edible);
+        }
+        edibleInstances.Clear();
+
+        //
+        GameLevelData levelData = new AllLevelData().levels[levelNumber];
+        playerInstance = Instantiate(
+            playerPrefab, 
+            levelData.playerStartPosition, Quaternion.identity
+        );
+        foreach (var enemyData in levelData.enemies)
+        {
+            GameObject enemyInstance = Instantiate(
+                enemyPrefab, 
+                enemyData.position, Quaternion.identity
+            );
+            enemyInstances.Add(enemyInstance);
+        }
+        foreach (var edibleData in levelData.edibles)
+        {
+            GameObject edibleInstance = Instantiate(
+                ediblePrefab, 
+                edibleData.position, Quaternion.identity
+            );
+            edibleInstances.Add(edibleInstance);
+        }
+    }
+}
