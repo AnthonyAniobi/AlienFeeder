@@ -952,6 +952,7 @@ GameObject:
   - component: {fileID: 1908751844154761290}
   - component: {fileID: 4500147791810653778}
   - component: {fileID: 1500487755295083081}
+  - component: {fileID: 1071213816011122089}
   m_Layer: 0
   m_Name: Mimic
   m_TagString: Untagged
@@ -1018,19 +1019,7 @@ MonoBehaviour:
   wallCollisionHeight: 0.8
   wallCollisionPadding: 0.02
   mimicBodyRenderer: {fileID: 8664424732557539340}
-  childScale: {x: 1, y: 1, z: 1}
-  teenScale: {x: 1.25, y: 1.25, z: 1.25}
-  adultScale: {x: 1.5, y: 1.5, z: 1.5}
-  bossScale: {x: 2, y: 2, z: 2}
-  childColor: {r: 1, g: 1, b: 1, a: 1}
-  teenColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  adultColor: {r: 1, g: 0, b: 0, a: 1}
-  bossColor: {r: 0, g: 0, b: 0, a: 1}
   levelVisualRoot: {fileID: 0}
-  childLegMaterial: {fileID: 2100000, guid: 261a6dcc85a41480196ec05a9425e17a, type: 2}
-  teenLegMaterial: {fileID: 2100000, guid: 247733efc65ac4b70a7bc74a2ca5745e, type: 2}
-  adultLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
-  bossLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
   floatingPowerupTextPrefab: {fileID: 6419237037296349417, guid: 21f6dca1c296840dbb44b0230ed82de5, type: 3}
   velocity: {x: 0.26252982, y: 0, z: -0.7986188}
 --- !u!114 &4500147791810653778
@@ -1061,13 +1050,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Vitality
   maxHealth: 100
-  mimicLevel: 0
   healthBarSlider: {fileID: 3663626022902567431}
-  nutritionBarSlider: {fileID: 8208802770128123928}
+  batteriesBarSlider: {fileID: 0}
   healthBarFillImage: {fileID: 2184890633588364511}
-  nutritionBarFillImage: {fileID: 1609593958472624338}
+  batteriesBarFillImage: {fileID: 0}
   healthText: {fileID: 2824505256649819235}
-  nutritionText: {fileID: 2784483866188585374}
+  batteriesText: {fileID: 0}
+--- !u!114 &1071213816011122089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926704422777073610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c500d8c9359f4e9a9846c9fe93833da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MimicType
+  whiteLegMaterial: {fileID: 2100000, guid: 261a6dcc85a41480196ec05a9425e17a, type: 2}
+  yellowLegMaterial: {fileID: 2100000, guid: 247733efc65ac4b70a7bc74a2ca5745e, type: 2}
+  redLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
+  blackLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
 --- !u!1 &6035437989811620758
 GameObject:
   m_ObjectHideFlags: 0
