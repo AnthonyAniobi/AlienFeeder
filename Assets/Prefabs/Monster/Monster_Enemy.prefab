@@ -77,6 +77,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   canChasePlayer: 1
   playerAttackOffsetDistance: 2
+  obstacleCheckDistance: 1.5
+  obstacleCheckRadius: 0.35
+  obstacleAvoidanceAngleStep: 30
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &9142860154347029683
 MonoBehaviour:
   m_ObjectHideFlags: 0
