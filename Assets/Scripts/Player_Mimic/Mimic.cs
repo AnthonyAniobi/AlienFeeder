@@ -60,20 +60,20 @@ public class Mimic : MonoBehaviour
 
     [Header("Mimic Levels")]
     [SerializeField] private MeshRenderer mimicBodyRenderer;
-    [SerializeField] private Vector3 childScale = Vector3.one;
-    [SerializeField] private Vector3 teenScale = new Vector3(1.25f, 1.25f, 1.25f);
-    [SerializeField] private Vector3 adultScale = new Vector3(1.5f, 1.5f, 1.5f);
-    [SerializeField] private Vector3 bossScale = new Vector3(2f, 2f, 2f);
-    [SerializeField] private Color childColor = Color.white;
-    [SerializeField] private Color teenColor = Color.yellow;
-    [SerializeField] private Color adultColor = Color.red;
-    [SerializeField] private Color bossColor = Color.black;
+    // [SerializeField] private Vector3 childScale = Vector3.one;
+    // [SerializeField] private Vector3 teenScale = new Vector3(1.25f, 1.25f, 1.25f);
+    // [SerializeField] private Vector3 adultScale = new Vector3(1.5f, 1.5f, 1.5f);
+    // [SerializeField] private Vector3 bossScale = new Vector3(2f, 2f, 2f);
+    // [SerializeField] private Color childColor = Color.white;
+    // [SerializeField] private Color teenColor = Color.yellow;
+    // [SerializeField] private Color adultColor = Color.red;
+    // [SerializeField] private Color bossColor = Color.black;
     [Tooltip("Visual body root to scale. Leave empty to scale the mimic renderers without moving camera targets.")]
     [SerializeField] private Transform levelVisualRoot;
-    [SerializeField] private Material childLegMaterial;
-    [SerializeField] private Material teenLegMaterial;
-    [SerializeField] private Material adultLegMaterial;
-    [SerializeField] private Material bossLegMaterial;
+    // [SerializeField] private Material childLegMaterial;
+    // [SerializeField] private Material teenLegMaterial;
+    // [SerializeField] private Material adultLegMaterial;
+    // [SerializeField] private Material bossLegMaterial;
 
     [Header("Effects")]
     [SerializeField] private GameObject floatingPowerupTextPrefab;
@@ -84,26 +84,28 @@ public class Mimic : MonoBehaviour
     bool isEating;
 
     List<GameObject> availableLegPool = new List<GameObject>();
-    Vitality vitality;
+    // Vitality vitality;
     Renderer[] bodyRenderers;
     Vector3 levelVisualBaseScale = Vector3.one;
 
     [Tooltip("This must be updates as the Mimin moves to assure great leg placement")]
     public Vector3 velocity;
 
+    private Material material;
+
     void Start()
     {
-        vitality = GetComponent<Vitality>();
+        // vitality = GetComponent<Vitality>();
         bodyRenderers = GetComponentsInChildren<Renderer>();
         ResolveLevelVisualRoot();
         ResetMimic();
-        if (vitality != null)
-            ApplyMimicLevel(vitality.MimicLevel);
+        // if (vitality != null)
+        //     ApplyMimicLevel(vitality.MimicLevel);
     }
 
-    private void OnValidate()
+    public void Initialize(Material bodyMaterial)
     {
-        ResetMimic();
+        material = bodyMaterial;
     }
 
     private void ResetMimic()
@@ -198,9 +200,11 @@ public class Mimic : MonoBehaviour
         newLeg.SetActive(true);
         Leg leg = newLeg.GetComponent<Leg>();
         leg.Initialize(footPosition, legResolution, maxLegDistance, growCoef, myMimic, lifeTime);
-        MimicLevelEnum level = vitality != null ? vitality.MimicLevel : MimicLevelEnum.child;
-        leg.SetMaterial(GetLegMaterial(level));
-        leg.SetColor(GetLevelColor(level));
+        // MimicLevelEnum level = vitality != null ? vitality.MimicLevel : MimicLevelEnum.child;
+        if(material != null){
+            leg.SetMaterial(material);
+        }
+        // leg.SetColor(GetLevelColor(level));
         newLeg.transform.SetParent(myMimic.transform);
     }
 
@@ -313,8 +317,6 @@ public class Mimic : MonoBehaviour
         // yield return null;
         if (edible != null)
         {
-            vitality ??= GetComponent<Vitality>();
-            vitality?.AddNutrition(edible.edibleValue);
             ShowFloatingPowerupText(edible.edibleValue, true);
             Destroy(edible.gameObject);
         }
@@ -342,29 +344,29 @@ public class Mimic : MonoBehaviour
         }
     }
 
-    public void ApplyMimicLevel(MimicLevelEnum level)
+    public void ApplyMimicMaterial(Material material)
     {
-        Vector3 levelScale = level switch
-        {
-            MimicLevelEnum.teen => teenScale,
-            MimicLevelEnum.adult => adultScale,
-            MimicLevelEnum.boss => bossScale,
-            _ => childScale
-        };
+        // Vector3 levelScale = level switch
+        // {
+        //     MimicLevelEnum.teen => teenScale,
+        //     MimicLevelEnum.adult => adultScale,
+        //     MimicLevelEnum.boss => bossScale,
+        //     _ => childScale
+        // };
 
-        if (levelVisualRoot != null)
-            levelVisualRoot.localScale = Vector3.Scale(levelVisualBaseScale, levelScale);
+        // if (levelVisualRoot != null)
+        //     levelVisualRoot.localScale = Vector3.Scale(levelVisualBaseScale, levelScale);
 
-        Color levelColor = GetLevelColor(level);
+        // Color levelColor = GetLevelColor(level);
 
-        mimicBodyRenderer.material.color = levelColor;
+        mimicBodyRenderer.material = material;
 
-        Material legMaterial = GetLegMaterial(level);
+        // Material legMaterial = GetLegMaterial(level);
 
         foreach (Leg leg in GetComponentsInChildren<Leg>(true))
         {
-            leg.SetMaterial(legMaterial);
-            leg.SetColor(levelColor);
+            leg.SetMaterial(material);
+            // leg.SetColor(levelColor);
         }
     }
 
@@ -387,27 +389,27 @@ public class Mimic : MonoBehaviour
         }
     }
 
-    private Color GetLevelColor(MimicLevelEnum level)
-    {
-        return level switch
-        {
-            MimicLevelEnum.teen => teenColor,
-            MimicLevelEnum.adult => adultColor,
-            MimicLevelEnum.boss => bossColor,
-            _ => childColor
-        };
-    }
+    // private Color GetLevelColor(MimicLevelEnum level)
+    // {
+    //     return level switch
+    //     {
+    //         MimicLevelEnum.teen => teenColor,
+    //         MimicLevelEnum.adult => adultColor,
+    //         MimicLevelEnum.boss => bossColor,
+    //         _ => childColor
+    //     };
+    // }
 
-    private Material GetLegMaterial(MimicLevelEnum level)
-    {
-        return level switch
-        {
-            MimicLevelEnum.teen => teenLegMaterial,
-            MimicLevelEnum.adult => adultLegMaterial,
-            MimicLevelEnum.boss => bossLegMaterial,
-            _ => childLegMaterial
-        };
-    }
+    // private Material GetLegMaterial(MimicLevelEnum level)
+    // {
+    //     return level switch
+    //     {
+    //         MimicLevelEnum.teen => teenLegMaterial,
+    //         MimicLevelEnum.adult => adultLegMaterial,
+    //         MimicLevelEnum.boss => bossLegMaterial,
+    //         _ => childLegMaterial
+    //     };
+    // }
 
     public void RecycleLeg(GameObject leg)
     {

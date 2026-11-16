@@ -5,34 +5,31 @@ using UnityEngine.UI;
 public class Vitality : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private MimicLevelEnum mimicLevel = MimicLevelEnum.child;
     [SerializeField] private Slider healthBarSlider;
-    [SerializeField] private Slider nutritionBarSlider;
+    [SerializeField] private Slider batteriesBarSlider;
     [SerializeField] private Image healthBarFillImage;
-    [SerializeField] private Image nutritionBarFillImage;
+    [SerializeField] private Image batteriesBarFillImage;
     [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private TextMeshProUGUI nutritionText;
+    [SerializeField] private TextMeshProUGUI batteriesText;
 
-    private float maxNutrition;
-    public MimicLevelEnum MimicLevel => mimicLevel;
+    private float maxBatteries;
     private float currentHealth;
-    private float currentNutrition;
+    private float currentBatteries;
 
-    public float vitalityValue => mimicLevel.GetNutritionThreshold() + currentNutrition;
+    // public float vitalityValue => mimicLevel.GetNutritionThreshold() + currentBatteries;
 
     private void Start()
     {
-        UpdateMimicLevel();
-        Initialize(maxHealth, maxNutrition);
+        Initialize(maxHealth, maxBatteries);
     }
 
     public void Initialize(float health, float nutrition)
     {
         maxHealth = health;
-        maxNutrition = nutrition;
+        maxBatteries = nutrition;
         currentHealth = maxHealth;
-        maxNutrition = mimicLevel.GetNutritionThreshold();
-        currentNutrition = 0;
+        // maxBatteries = mimicLevel.GetNutritionThreshold();
+        currentBatteries = 0;
         UpdateSliders();
     }
 
@@ -41,8 +38,7 @@ public class Vitality : MonoBehaviour
         if (value <= 0f)
             return;
 
-        currentNutrition += value;
-        UpdateMimicLevel();
+        currentBatteries += value;
         UpdateSliders();
     }
 
@@ -74,38 +70,17 @@ public class Vitality : MonoBehaviour
         if (value <= 0f)
             return;
 
-        currentNutrition -= value;
-        while (currentNutrition < 0f && mimicLevel > MimicLevelEnum.child)
+        currentBatteries -= value;
+        
+        if (currentBatteries < 0f)
         {
-            mimicLevel--;
-            currentNutrition += mimicLevel.GetNutritionThreshold();
-            maxNutrition = mimicLevel.GetNutritionThreshold();
-            GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
-        }
-
-        if (currentNutrition < 0f)
-        {
-            TakeDamage(-currentNutrition);
-            currentNutrition = 0f;
+            TakeDamage(-currentBatteries);
+            currentBatteries = 0f;
         }
 
         UpdateSliders();
     }
 
-    private void UpdateMimicLevel()
-    {
-        
-        if (currentNutrition >= mimicLevel.GetNutritionThreshold()){
-            int nextLevel = (int)mimicLevel + 1;
-            if (nextLevel > (int)MimicLevelEnum.boss)
-                return;
-
-            mimicLevel = (MimicLevelEnum)nextLevel;
-            currentNutrition = 0f;
-            maxNutrition = mimicLevel.GetNutritionThreshold();
-            GetComponent<Mimic>()?.ApplyMimicLevel(mimicLevel);
-        }
-    }
 
     private void UpdateSliders()
     {
@@ -114,47 +89,19 @@ public class Vitality : MonoBehaviour
             healthBarSlider.value = currentHealth / maxHealth;
         }
 
-        if (nutritionBarSlider != null)
+        if (batteriesBarSlider != null)
         {
-            nutritionBarSlider.value = currentNutrition / maxNutrition;
+            batteriesBarSlider.value = currentBatteries / maxBatteries;
         }
-        if (nutritionBarFillImage != null)
-            nutritionBarFillImage.color = Color.Lerp(Color.blue, Color.purple, currentNutrition / maxNutrition);
+        if (batteriesBarFillImage != null)
+            batteriesBarFillImage.color = Color.Lerp(Color.blue, Color.purple, currentBatteries / maxBatteries);
         if (healthBarFillImage != null)
             healthBarFillImage.color = Color.Lerp(Color.yellow, Color.green, currentHealth / maxHealth);
 
-        if (nutritionText != null)
-            nutritionText.text = $"{vitalityValue}";
+        if (batteriesText != null)
+            batteriesText.text = $"{currentBatteries}/{maxBatteries}";
         if (healthText != null)
             healthText.text = $"{currentHealth}/{maxHealth}";
     }
 }
 
-
-public enum MimicLevelEnum
-{
-    child = 0,
-    teen = 1,
-    adult = 2,
-    boss = 3
-}
-
-public static class MimicLevel
-{
-    public static float GetNutritionThreshold(this MimicLevelEnum level)
-    {
-        switch (level)
-        {
-            case MimicLevelEnum.child:
-                return 10f;
-            case MimicLevelEnum.teen:
-                return 20f;
-            case MimicLevelEnum.adult:
-                return 30f;
-            case MimicLevelEnum.boss:
-                return 100f;
-            default:
-                return 0f;
-        }
-    }
-}
