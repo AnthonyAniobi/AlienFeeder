@@ -322,6 +322,7 @@ public class Mimic : MonoBehaviour
         if (edible != null)
         {
             ShowFloatingPowerupText(edible.edibleValue, true);
+            GetComponent<Vitality>()?.AddNutrition(edible.edibleValue);
             Destroy(edible.gameObject);
         }
 

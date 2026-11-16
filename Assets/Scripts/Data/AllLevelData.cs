@@ -11,7 +11,8 @@ class AllLevelData
     private GameLevelData level1 = new GameLevelData(
         MimicTypeEnum.white,
         new Vector3(122, 1, -72), // player start position
-        new Vector3(50, 1, -8), // player exit position
+        new Vector3(50, 2.5f, -8), // player exit position
+        25,
         new List<EnemyData> {
             new EnemyData(102, -59, 5f, 10f, true),
             new EnemyData(91, -68, 7f, 15f, false),
@@ -24,9 +25,6 @@ class AllLevelData
             new EdibleData(95, -50, EdibleType.Banana),
             new EdibleData(110, -40, EdibleType.Apple),
             new EdibleData(105, -30, EdibleType.Banana)
-        },
-        new List<RocketPartData> {
-            new RocketPartData(123, 36),
         }
     );
 }

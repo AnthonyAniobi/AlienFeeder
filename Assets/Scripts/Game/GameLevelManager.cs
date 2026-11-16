@@ -9,6 +9,7 @@ public class GameLevelManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public GameObject ediblePrefab;
+    public GameObject exitPortalPrefab;
     public Sprite pauseSprite;
     public Sprite playSprite;
 
@@ -59,7 +60,12 @@ public class GameLevelManager : MonoBehaviour
 
     public void OnPlayerVictory()
     {
-        Debug.Log("Player has collected enough batteries to progress to the next level!");
+        GameLevelData currentLevelData = new AllLevelData().levels[level];
+        Instantiate(
+            exitPortalPrefab, 
+            currentLevelData.playerExitPosition, 
+            Quaternion.identity
+        );
     }
 
     private void OnVolumeChanged(float value)
@@ -96,14 +102,16 @@ public class GameLevelManager : MonoBehaviour
             Destroy(edible);
         }
         edibleInstances.Clear();
-
         //
         GameLevelData levelData = new AllLevelData().levels[levelNumber];
         playerInstance = Instantiate(
             playerPrefab, 
             levelData.playerStartPosition, Quaternion.identity
         );
-        playerInstance.GetComponentInChildren<MimicType>().Initialize(levelData.mimicType, levelData.edibles.Count);
+        playerInstance.GetComponentInChildren<MimicType>().Initialize(
+            levelData.mimicType, 
+            levelData.totalBatteriesToCollect
+        );
         foreach (var enemyData in levelData.enemies)
         {
             GameObject enemyInstance = Instantiate(

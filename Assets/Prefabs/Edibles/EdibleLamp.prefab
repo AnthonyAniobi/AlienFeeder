@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2015d174f0624616ad7da93d1f7a076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EdibleController
-  edibleValue: 4
+  edibleValue: 5
 --- !u!65 &5873875279470398790
 BoxCollider:
   m_ObjectHideFlags: 0

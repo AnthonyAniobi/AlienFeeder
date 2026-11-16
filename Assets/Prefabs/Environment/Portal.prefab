@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 2342241014540652898}
   - component: {fileID: 2429537064723834982}
   - component: {fileID: 2690779053577454659}
+  - component: {fileID: 5598727113100024482}
   m_Layer: 0
-  m_Name: Portal blue
+  m_Name: Portal
   m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4920,6 +4921,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0188293, y: 2.1393266, z: 0.55314636}
   m_Center: {x: 0.23915482, y: 0.025963545, z: -0.003900528}
+--- !u!114 &5598727113100024482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4788475684563217035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ec80a7873754eb5be4a8ba0c7869cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalController
 --- !u!1 &6713733310809335765
 GameObject:
   m_ObjectHideFlags: 0
