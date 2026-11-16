@@ -75,14 +75,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d158dcdc1173d49c08516f8d469eef58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  canChasePlayer: 1
   playerAttackOffsetDistance: 2
+  wallTag: Wall
   obstacleCheckDistance: 1.5
   obstacleCheckRadius: 0.35
   obstacleAvoidanceAngleStep: 30
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
 --- !u!114 &9142860154347029683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,9 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e4e4871d1224770b6f89e53b0ac1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  power: 10
   attackDamage: 10
-  vitalityValue: 5
   attackPoint: {fileID: 4394627021053525456}
   attackRange: 0.5
 --- !u!1 &3817250001938094157

@@ -46,39 +46,6 @@ public class Vitality : MonoBehaviour
         UpdateSliders();
     }
 
-    public bool ReceiveEnemyAttack(EnemyAttack enemy)
-    {
-        if (enemy == null)
-            return false;
-
-        TakeDamage(enemy.attackDamage);
-
-        return vitalityValue > enemy.power;
-    }
-
-    public bool ResolveEnemyContact(EnemyAttack enemy, float pushbackDistance)
-    {
-        if (enemy == null)
-            return false;
-
-        if (vitalityValue > enemy.power)
-        {
-            AddNutrition(enemy.vitalityValue);
-            GetComponent<Mimic>()?.ShowFloatingPowerupText(enemy.vitalityValue, true);
-            return true;
-        }
-
-        RemoveNutrition(enemy.power);
-        TakeDamage(enemy.attackDamage);
-
-        Vector3 pushDirection = transform.position - enemy.transform.position;
-        pushDirection.y = 0f;
-        if (pushDirection.sqrMagnitude > 0f)
-            transform.position += pushDirection.normalized * pushbackDistance;
-
-        return false;
-    }
-
     public void TakeDamage(float damage)
     {
         if (damage <= 0f)

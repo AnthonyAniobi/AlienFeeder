@@ -51,6 +51,10 @@ public class GameLevelManager : MonoBehaviour
     {
         controlsPanel.SetActive(CustomInput.Instance.screenInputEnabled);
         pausePanel.SetActive(isPaused);
+        if (!CustomInput.Instance.screenInputEnabled)
+        {
+            CustomInput.Instance.HideCursor();
+        }
     }
 
     public void StartLevel(int levelNumber)
@@ -104,11 +108,13 @@ public class GameLevelManager : MonoBehaviour
         {
             CustomInput.Instance.screenInputEnabled = false;
             controlsPanel.SetActive(false);
+            CustomInput.Instance.HideCursor();
         }
         else
         {
             CustomInput.Instance.screenInputEnabled = true;
             controlsPanel.SetActive(true);
+            CustomInput.Instance.ShowCursor();
         }
     }
 
@@ -122,6 +128,7 @@ public class GameLevelManager : MonoBehaviour
             {
                 pauseImage.sprite = isPaused ? playSprite : pauseSprite;
             }
+            Time.timeScale = isPaused ? 0f : 1f;
         }
     }
 }
