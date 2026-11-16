@@ -127,10 +127,15 @@ public class Leg : MonoBehaviour
         else if (growTarget == 1)
         {
             // Check is the body is in line of sight from the foot position, and initiates the retractation if it isn't
-            RaycastHit hit;
-            if (Physics.Linecast(footPosition, transform.position, out hit))
+            Vector3 direction = transform.position - footPosition;
+            RaycastHit[] hits = Physics.RaycastAll(footPosition, direction.normalized, direction.magnitude);
+            foreach (RaycastHit hit in hits)
             {
-                growTarget = 0;
+                if (hit.collider.GetComponentInParent<Mimic>() != myMimic)
+                {
+                    growTarget = 0;
+                    break;
+                }
             }
         }
         // progression defines the percentage of deployement (1 being fully deployed and 0 fully retracted)
