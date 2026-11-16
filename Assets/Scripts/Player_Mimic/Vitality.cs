@@ -40,6 +40,7 @@ public class Vitality : MonoBehaviour
 
         currentBatteries += value;
         UpdateSliders();
+        Debug.Log($"Current Batteries: {currentBatteries}/{maxBatteries}");
         if (currentBatteries >= maxBatteries)
         {
             // Player has collected enough batteries to progress to the next level

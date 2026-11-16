@@ -20,6 +20,7 @@ public class GameLevelManager : MonoBehaviour
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private TMPro.TMP_Dropdown controlTypeDropdown;
     bool isPaused = false;
+    internal int level = 0;
 
     
     
@@ -79,7 +80,7 @@ public class GameLevelManager : MonoBehaviour
 
     public void StartLevel(int levelNumber)
     {
-        
+        level = levelNumber;
         // Clear previous level instances
         if (playerInstance != null)
         {
@@ -102,7 +103,7 @@ public class GameLevelManager : MonoBehaviour
             playerPrefab, 
             levelData.playerStartPosition, Quaternion.identity
         );
-        playerInstance.GetComponent<MimicType>().Initialize(levelData.mimicType, levelData.edibles.Count);
+        playerInstance.GetComponentInChildren<MimicType>().Initialize(levelData.mimicType, levelData.edibles.Count);
         foreach (var enemyData in levelData.enemies)
         {
             GameObject enemyInstance = Instantiate(

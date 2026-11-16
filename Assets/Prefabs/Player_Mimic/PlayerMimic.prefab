@@ -1013,9 +1013,6 @@ MonoBehaviour:
   wallTag: Wall
   edibleDetectionRadius: 1.6
   ediblePullDuration: 0.35
-  enemyDetectionRadius: 2
-  enemyPullDuration: 0.35
-  enemyPushbackDistance: 3
   wallCollisionRadius: 0.35
   wallCollisionHeight: 0.8
   wallCollisionPadding: 0.02
@@ -1052,11 +1049,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Vitality
   maxHealth: 100
   healthBarSlider: {fileID: 3663626022902567431}
-  batteriesBarSlider: {fileID: 0}
+  batteriesBarSlider: {fileID: 8208802770128123928}
   healthBarFillImage: {fileID: 2184890633588364511}
-  batteriesBarFillImage: {fileID: 0}
+  batteriesBarFillImage: {fileID: 1609593958472624338}
   healthText: {fileID: 2824505256649819235}
-  batteriesText: {fileID: 0}
+  batteriesText: {fileID: 2784483866188585374}
 --- !u!114 &1071213816011122089
 MonoBehaviour:
   m_ObjectHideFlags: 0

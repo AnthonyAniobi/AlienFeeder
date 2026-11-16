@@ -199,12 +199,20 @@ public class Mimic : MonoBehaviour
         newLeg.transform.localPosition = Vector3.zero;
         newLeg.SetActive(true);
         Leg leg = newLeg.GetComponent<Leg>();
+        if (leg == null)
+        {
+            newLeg.SetActive(false);
+            availableLegPool.Add(newLeg);
+            return;
+        }
+
         leg.Initialize(footPosition, legResolution, maxLegDistance, growCoef, myMimic, lifeTime);
         // MimicLevelEnum level = vitality != null ? vitality.MimicLevel : MimicLevelEnum.child;
-        if(material != null){
+        if (material != null)
+        {
             leg.SetMaterial(material);
+            leg.SetColor(material.color);
         }
-        leg.SetColor(material.color);
     }
 
     public bool TryGetGroundPoint(Vector3 position, out Vector3 groundPoint)
