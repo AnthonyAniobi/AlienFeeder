@@ -52,8 +52,8 @@ public class BackgroundMusicManager : MonoBehaviour
 
     void LoadAudioClips()
     {
-        menuMusic = Resources.Load<AudioClip>("Sounds/Music/Menu");
-        levelMusic = Resources.Load<AudioClip>("Sounds/Music/Level");
+        menuMusic = Resources.Load<AudioClip>("Music/Menu");
+        levelMusic = Resources.Load<AudioClip>("Music/Game");
     }
 
     public void UpdateVolume(float newVolume)
