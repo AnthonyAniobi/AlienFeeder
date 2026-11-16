@@ -12,6 +12,7 @@ public class MenuBarManager : MonoBehaviour
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         controlTypeDropdown.onValueChanged.AddListener(SetControlType);
         SettingsPanel.SetActive(false);
+        volumeSlider.value = BackgroundMusicManager.Instance.volume;
     }
 
     private void OnVolumeChanged(float value)
