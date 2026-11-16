@@ -1979,6 +1979,7 @@ MonoBehaviour:
   pauseImage: {fileID: 445351934}
   controlsPanel: {fileID: 675434563}
   volumeSlider: {fileID: 18381814}
+  controlTypeDropdown: {fileID: 390350647}
 --- !u!4 &121500102
 Transform:
   m_ObjectHideFlags: 0
@@ -6171,7 +6172,19 @@ MonoBehaviour:
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 121500101}
+        m_TargetAssemblyTypeName: GameLevelManager, Assembly-CSharp
+        m_MethodName: SetControlType
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &390350648
 MonoBehaviour:
@@ -10445,7 +10458,7 @@ GameObject:
   - component: {fileID: 661628580}
   - component: {fileID: 661628581}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: ControlsRow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16431,7 +16444,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1527
+    m_Bits: 1535
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -18812,7 +18825,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1216533257}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 121500101}
+        m_TargetAssemblyTypeName: GameLevelManager, Assembly-CSharp
+        m_MethodName: TogglePauseMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1216533257
 MonoBehaviour:
   m_ObjectHideFlags: 0

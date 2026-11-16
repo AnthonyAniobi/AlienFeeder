@@ -14,7 +14,13 @@ public class EnemyLookout : MonoBehaviour
         if(playerTransform == null)
         {
             // moveTowardsPlayer();
-            if(Physics.SphereCast(eyeTransform.position, eyeRadius, eyeTransform.forward, out RaycastHit hitInfo, lookoutDistance))
+            if(Physics.SphereCast(eyeTransform.position, 
+            eyeRadius, 
+            eyeTransform.forward, 
+            out RaycastHit hitInfo, 
+            lookoutDistance, 
+            LayerMask.GetMask("Player", "Wall"))
+            )
             {
                 if(hitInfo.collider.CompareTag("Player"))
                 {
@@ -27,16 +33,21 @@ public class EnemyLookout : MonoBehaviour
                 }
                 if(hitInfo.collider.CompareTag("Wall"))
                 {
-                    Debug.Log("Mimic detected!");
+                    
                 }
+                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, Vector3.forward, lookoutDistance, Color.green);
+            }
+            else
+            {
+                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, Vector3.forward, lookoutDistance, Color.red);
             }
         }
-        else
-        {
-            // Move towards the player
-            Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
-            
-        }
+        // else
+        // {
+        //     // Move towards the player
+        //     Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
+        //     Debug.DrawLine(transform.position, transform.position + directionToPlayer * lookoutDistance, Color.blue);
+        // }
         
     }
 }

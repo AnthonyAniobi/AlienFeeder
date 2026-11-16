@@ -18,6 +18,7 @@ public class CustomInput : MonoBehaviour
     internal bool jump;
     internal bool nextWeapon;
     internal bool prevWeapon;
+    internal bool escape;
     
     private InputActionMap inputActions;
 
@@ -50,6 +51,7 @@ public class CustomInput : MonoBehaviour
             jump = inputActions.FindAction("Jump").WasPerformedThisFrame();
             nextWeapon = inputActions.FindAction("Next").WasPerformedThisFrame();
             prevWeapon = inputActions.FindAction("Previous").WasPerformedThisFrame();
+            escape = inputActions.FindAction("Escape").WasPerformedThisFrame();
         }
     }
 

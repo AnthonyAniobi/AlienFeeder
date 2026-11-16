@@ -18,6 +18,7 @@ public class GameLevelManager : MonoBehaviour
     [SerializeField] private Image pauseImage;
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private Slider volumeSlider;
+    [SerializeField] private TMPro.TMP_Dropdown controlTypeDropdown;
     bool isPaused = false;
 
     
@@ -33,6 +34,7 @@ public class GameLevelManager : MonoBehaviour
     void Start()
     {
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+        controlTypeDropdown.onValueChanged.AddListener(SetControlType);
         Initialize();
         StartLevel(1);
     }
@@ -41,7 +43,15 @@ public class GameLevelManager : MonoBehaviour
         volumeSlider.onValueChanged.RemoveListener(OnVolumeChanged);
     }
 
-     private void OnVolumeChanged(float value)
+    void Update()
+    {
+        if (CustomInput.Instance.escape)
+        {
+            TogglePauseMenu();
+        }
+    }
+
+    private void OnVolumeChanged(float value)
     {
         // BackgroundMusicManager.Instance.UpdateVolume(value);
         // UpdateVolumeText();
@@ -129,6 +139,36 @@ public class GameLevelManager : MonoBehaviour
                 pauseImage.sprite = isPaused ? playSprite : pauseSprite;
             }
             Time.timeScale = isPaused ? 0f : 1f;
+            if (isPaused)
+            {
+                CustomInput.Instance.ShowCursor();
+            }
+            else
+            {
+                CustomInput.Instance.HideCursor();
+            }
+        }
+    }
+
+    // 
+    public void MainMenu()
+    {
+        
+    }
+
+    private void SetControlType(int controlType)
+    {
+        if(controlType == 0)
+        {
+            CustomInput.Instance.screenInputEnabled = false;
+            controlsPanel.SetActive(false);
+            CustomInput.Instance.HideCursor();
+        }
+        else if(controlType == 1)
+        {
+            CustomInput.Instance.screenInputEnabled = true;
+            controlsPanel.SetActive(true);
+            CustomInput.Instance.ShowCursor();
         }
     }
 }

@@ -78,7 +78,7 @@ MonoBehaviour:
   playerAttackOffsetDistance: 2
   wallTag: Wall
   obstacleCheckDistance: 1.5
-  obstacleCheckRadius: 0.35
+  obstacleCheckRadius: 0.5
   obstacleAvoidanceAngleStep: 30
   obstacleLayers:
     serializedVersion: 2
@@ -95,9 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0fa77e2a12f46b98188cfd68c11522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLookout
-  lookoutDistance: 6
+  lookoutDistance: 10
   eyeTransform: {fileID: 6927917934904268148}
-  eyeRadius: 0.5
+  eyeRadius: 1
   wallOffsetDistance: 1
 --- !u!114 &3669312200368144289
 MonoBehaviour:
@@ -356,7 +356,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
