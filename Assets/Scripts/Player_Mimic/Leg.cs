@@ -121,6 +121,9 @@ public class Leg : MonoBehaviour
 
     private void Update()
     {
+        if (myMimic == null || legLine == null || handles == null)
+            return;
+
         // The growTarget is set to 1 if the leg must grow, and 0 if it must retract
         if (growTarget == 1 && Vector3.Distance(new Vector3(myMimic.legPlacerOrigin.x, 0, myMimic.legPlacerOrigin.z), new Vector3(footPosition.x, 0, footPosition.z)) > maxLegDistance && canDie && myMimic.deployedLegs > myMimic.minimumAnchoredParts)
             growTarget = 0;
@@ -156,7 +159,7 @@ public class Leg : MonoBehaviour
         {
             if (!isRemoved)
             {
-                GetComponentInParent<Mimic>().legCount--;
+                myMimic.legCount--;
                 isRemoved = true;
             }
 
@@ -182,7 +185,7 @@ public class Leg : MonoBehaviour
     void Sethandles()
     {
         // Start handle at body position
-        handles[0] = transform.position;
+        handles[0] = myMimic.transform.position;
 
         // The foot position is moved upward,
         // in combination with the Handles[7] offset it will look like an "ankle"

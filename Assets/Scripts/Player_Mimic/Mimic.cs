@@ -195,6 +195,8 @@ public class Mimic : MonoBehaviour
         {
             newLeg = Instantiate(legPrefab, transform.position, Quaternion.identity);
         }
+        newLeg.transform.SetParent(myMimic.transform, false);
+        newLeg.transform.localPosition = Vector3.zero;
         newLeg.SetActive(true);
         Leg leg = newLeg.GetComponent<Leg>();
         leg.Initialize(footPosition, legResolution, maxLegDistance, growCoef, myMimic, lifeTime);
@@ -203,7 +205,6 @@ public class Mimic : MonoBehaviour
             leg.SetMaterial(material);
         }
         leg.SetColor(material.color);
-        newLeg.transform.SetParent(myMimic.transform);
     }
 
     public bool TryGetGroundPoint(Vector3 position, out Vector3 groundPoint)
