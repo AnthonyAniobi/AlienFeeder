@@ -51,6 +51,16 @@ public class GameLevelManager : MonoBehaviour
         }
     }
 
+    public void OnPlayerDeath()
+    {
+        Debug.Log("Player has died! Restarting the level...");
+    }
+
+    public void OnPlayerVictory()
+    {
+        Debug.Log("Player has collected enough batteries to progress to the next level!");
+    }
+
     private void OnVolumeChanged(float value)
     {
         // BackgroundMusicManager.Instance.UpdateVolume(value);
@@ -92,6 +102,7 @@ public class GameLevelManager : MonoBehaviour
             playerPrefab, 
             levelData.playerStartPosition, Quaternion.identity
         );
+        playerInstance.GetComponent<MimicType>().Initialize(levelData.mimicType, levelData.edibles.Count);
         foreach (var enemyData in levelData.enemies)
         {
             GameObject enemyInstance = Instantiate(

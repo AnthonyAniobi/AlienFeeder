@@ -9,6 +9,7 @@ class AllLevelData
     };
 
     private GameLevelData level1 = new GameLevelData(
+        MimicTypeEnum.white,
         new Vector3(122, 1, -72), // player start position
         new Vector3(50, 1, -8), // player exit position
         new List<EnemyData> {

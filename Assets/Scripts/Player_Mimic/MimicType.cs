@@ -10,7 +10,7 @@ public class MimicType : MonoBehaviour
     
     void Start()
     {
-        Initialize(MimicTypeEnum.red, 10f);
+        // Initialize(MimicTypeEnum.red, 10f);
     }
 
     public void Initialize(MimicTypeEnum mimicType, float totalBatteriesToCollect)

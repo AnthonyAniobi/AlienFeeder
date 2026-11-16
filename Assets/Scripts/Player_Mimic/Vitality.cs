@@ -40,6 +40,11 @@ public class Vitality : MonoBehaviour
 
         currentBatteries += value;
         UpdateSliders();
+        if (currentBatteries >= maxBatteries)
+        {
+            // Player has collected enough batteries to progress to the next level
+            FindObjectOfType<GameLevelManager>()?.OnPlayerVictory();
+        }
     }
 
 
@@ -63,6 +68,7 @@ public class Vitality : MonoBehaviour
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
         UpdateSliders();
+        FindObjectOfType<GameLevelManager>()?.OnPlayerDeath();
     }
 
     private void RemoveNutrition(float value)
