@@ -20,12 +20,16 @@ public class GameLevelManager : MonoBehaviour
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private TMPro.TMP_Dropdown controlTypeDropdown;
-    bool isPaused = false;
-    internal int level = 0;
 
-    
-    
-    
+    [Header("Game Over UI")]
+    public GameObject gameOverPanel;
+    public GameObject losePanel;
+    public GameObject winPanel;
+
+
+    // internal state variables
+    internal bool isPaused = false;
+    internal int level = 0;
 
 
     // 
@@ -55,7 +59,9 @@ public class GameLevelManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        Debug.Log("Player has died! Restarting the level...");
+        gameOverPanel.SetActive(true);
+        losePanel.SetActive(true);
+        winPanel.SetActive(false);
     }
 
     public void OnPlayerVictory()
@@ -68,6 +74,14 @@ public class GameLevelManager : MonoBehaviour
         );
     }
 
+    public void OnPlayerEnterPortal()
+    {
+        gameOverPanel.SetActive(true);
+        losePanel.SetActive(false);
+        winPanel.SetActive(true);
+        Time.timeScale = 0f; // Pause the game when the player wins
+    }
+
     private void OnVolumeChanged(float value)
     {
         // BackgroundMusicManager.Instance.UpdateVolume(value);
@@ -78,10 +92,15 @@ public class GameLevelManager : MonoBehaviour
     {
         controlsPanel.SetActive(CustomInput.Instance.screenInputEnabled);
         pausePanel.SetActive(isPaused);
+        gameOverPanel.SetActive(false);
+        winPanel.SetActive(false);
+        losePanel.SetActive(false);
+
         if (!CustomInput.Instance.screenInputEnabled)
         {
             CustomInput.Instance.HideCursor();
         }
+        
     }
 
     public void StartLevel(int levelNumber)
@@ -128,6 +147,7 @@ public class GameLevelManager : MonoBehaviour
             );
             edibleInstances.Add(edibleInstance);
         }
+        Time.timeScale = 1f; // Reset time scale in case it was paused
     }
 
 
@@ -182,7 +202,12 @@ public class GameLevelManager : MonoBehaviour
     // 
     public void MainMenu()
     {
-        
+        NavigatorManager.Instance.NavigateTo(ScreenEnum.MainMenu);
+    }
+
+    public void NextLevel()
+    {
+        StartLevel(level + 1);
     }
 
     private void SetControlType(int controlType)
