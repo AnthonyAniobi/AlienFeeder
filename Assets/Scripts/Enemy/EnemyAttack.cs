@@ -6,7 +6,7 @@ public class EnemyAttack : MonoBehaviour
     
     [Header("Attack Settings")]
     public Transform attackPoint;
-    public float attackRange = 0.5f;
+    public float attackRange = 5.5f;
 
 
     public void Attack()
@@ -15,11 +15,10 @@ public class EnemyAttack : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(currentAttackPoint.position, attackRange);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Player"))
+            Vitality targetVitality = hitCollider.GetComponentInParent<Vitality>();
+            if (targetVitality != null)
             {
-                Vitality targetVitality = hitCollider.GetComponentInParent<Vitality>();
-                targetVitality?.TakeDamage(attackDamage);
-
+                targetVitality.TakeDamage(attackDamage);
                 break;
             }
         }
@@ -28,10 +27,20 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        DamagePlayer(other);
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        DamagePlayer(hit.collider);
+    }
+
+    private void DamagePlayer(Collider other)
+    {
+        Vitality targetVitality = other.GetComponentInParent<Vitality>();
+        if (targetVitality != null)
         {
-            Vitality targetVitality = other.GetComponentInParent<Vitality>();
-            targetVitality?.ResolveEnemyContact(attackDamage, 0, transform.position, 10f);
+            targetVitality.ResolveEnemyContact(attackDamage, 0, transform.position, 0f);
         }
     }
 }

@@ -51,9 +51,6 @@ public class Mimic : MonoBehaviour
     [SerializeField] private string wallTag = "Wall";
     [SerializeField] private float edibleDetectionRadius = 1f;
     [SerializeField] private float ediblePullDuration = 0.35f;
-    [SerializeField] private float enemyDetectionRadius = 1f;
-    [SerializeField] private float enemyPullDuration = 0.35f;
-    [SerializeField] private float enemyPushbackDistance = 1f;
     [SerializeField] private float wallCollisionRadius = 0.35f;
     [SerializeField] private float wallCollisionHeight = 0.8f;
     [SerializeField] private float wallCollisionPadding = 0.02f;

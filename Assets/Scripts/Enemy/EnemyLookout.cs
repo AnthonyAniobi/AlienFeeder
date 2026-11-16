@@ -5,50 +5,56 @@ public class EnemyLookout : MonoBehaviour
     [SerializeField] private float lookoutDistance = 10f;
     [SerializeField] private Transform eyeTransform;
     [SerializeField] private float eyeRadius = 0.5f;
-    [SerializeField] private float wallOffsetDistance = 1f;
+    [SerializeField] private LayerMask lookoutLayers = Physics.AllLayers;
 
-    private Transform playerTransform;
-    
     void Update()
     {
-        if(playerTransform == null)
+        if (eyeTransform == null)
         {
-            // moveTowardsPlayer();
-            if(Physics.SphereCast(eyeTransform.position, 
-            eyeRadius, 
-            eyeTransform.forward, 
-            out RaycastHit hitInfo, 
-            lookoutDistance, 
-            LayerMask.GetMask("Player"))
-            )
+            return;
+        }
+
+        DebugExtension.DrawSphereCast(
+            eyeTransform.position,
+            eyeRadius,
+            eyeTransform.forward,
+            lookoutDistance,
+            FindPlayer() != null ? Color.green : Color.red);
+    }
+
+    private Transform FindPlayer()
+    {
+        int layerMask = lookoutLayers.value == 0 ? Physics.AllLayers : lookoutLayers.value;
+        RaycastHit[] hits = Physics.SphereCastAll(
+            eyeTransform.position,
+            eyeRadius,
+            eyeTransform.forward,
+            lookoutDistance,
+            layerMask);
+
+        System.Array.Sort(hits, (first, second) => first.distance.CompareTo(second.distance));
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.transform.IsChildOf(transform))
             {
-                Debug.Log("Lookout detected: " + hitInfo.collider.name);
-                if(hitInfo.collider.CompareTag("Player"))
-                {
-                    if(playerTransform == null)
-                    {
-                        playerTransform = hitInfo.collider.transform;
-                        GetComponent<EnemyController>().SetPlayerTransform(playerTransform);
-                        Debug.Log("Mimic detected!");
-                    }
-                }
-                if(hitInfo.collider.CompareTag("Wall"))
-                {
-                    
-                }
-                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, eyeTransform.forward, lookoutDistance, Color.green);
+                continue;
             }
-            else
+
+            if (hit.collider.CompareTag("Wall"))
             {
-                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, eyeTransform.forward, lookoutDistance, Color.red);
+                return null;
+            }
+
+            Mimic mimic = hit.collider.GetComponentInParent<Mimic>();
+            if (hit.collider.CompareTag("Player") || mimic != null)
+            {
+                Transform player = mimic != null ? mimic.transform : hit.collider.transform;
+                GetComponent<EnemyController>()?.SetPlayerTransform(player);
+                return player;
             }
         }
-        // else
-        // {
-        //     // Move towards the player
-        //     Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
-        //     Debug.DrawLine(transform.position, transform.position + directionToPlayer * lookoutDistance, Color.blue);
-        // }
-        
+
+        return null;
     }
 }

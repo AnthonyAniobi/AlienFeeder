@@ -10,13 +10,17 @@ public class MimicType : MonoBehaviour
     
     void Start()
     {
-        Initialize(MimicTypeEnum.red);
+        Initialize(MimicTypeEnum.red, 10f);
     }
 
-    public void Initialize(MimicTypeEnum mimicType)
+    public void Initialize(MimicTypeEnum mimicType, float totalBatteriesToCollect)
     {
 
         GetComponent<Mimic>().Initialize(GetLegMaterial(mimicType));
+        GetComponent<Vitality>().Initialize(
+            mimicType.HealthValue(),
+            totalBatteriesToCollect
+        );
     }
 
     Material GetLegMaterial(MimicTypeEnum mimicType)
@@ -44,4 +48,41 @@ public enum MimicTypeEnum
     yellow,
     red,
     black
+}
+
+public static class MimicTypeEnumExtensions
+{
+    public static Color GetColor(this MimicTypeEnum mimicType)
+    {
+        switch (mimicType)
+        {
+            case MimicTypeEnum.white:
+                return Color.white;
+            case MimicTypeEnum.yellow:
+                return Color.yellow;
+            case MimicTypeEnum.red:
+                return Color.red;
+            case MimicTypeEnum.black:
+                return Color.black;
+            default:
+                return Color.white;
+        }
+    }
+
+    public static float HealthValue(this MimicTypeEnum mimicType)
+    {
+        switch (mimicType)
+        {
+            case MimicTypeEnum.white:
+                return 100f;
+            case MimicTypeEnum.yellow:
+                return 110f;
+            case MimicTypeEnum.red:
+                return 120f;
+            case MimicTypeEnum.black:
+                return 150f;
+            default:
+                return 100f;
+        }
+    }
 }

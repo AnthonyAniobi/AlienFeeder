@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Enemy
   - CinemachineTarget
+  - Portal
   layers:
   - Default
   - TransparentFX

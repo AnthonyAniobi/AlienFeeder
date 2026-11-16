@@ -18,7 +18,6 @@ class AllLevelData
             new EnemyData(99, -7.5f, 8f, 12f, false)
         },
         new List<EdibleData> {
-            new EdibleData(122, -72, EdibleType.Apple),
             new EdibleData(100, -60, EdibleType.Banana),
             new EdibleData(90, -70, EdibleType.Apple),
             new EdibleData(95, -50, EdibleType.Banana),

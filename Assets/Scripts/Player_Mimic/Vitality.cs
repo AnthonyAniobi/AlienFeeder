@@ -23,10 +23,10 @@ public class Vitality : MonoBehaviour
         Initialize(maxHealth, maxBatteries);
     }
 
-    public void Initialize(float health, float nutrition)
+    public void Initialize(float health, float batteries)
     {
         maxHealth = health;
-        maxBatteries = nutrition;
+        maxBatteries = batteries;
         currentHealth = maxHealth;
         // maxBatteries = mimicLevel.GetNutritionThreshold();
         currentBatteries = 0;
