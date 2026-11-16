@@ -145,8 +145,17 @@ public class GameLevelManager : MonoBehaviour
             }
             else
             {
-                CustomInput.Instance.HideCursor();
+                // is playing game
+                if(CustomInput.Instance.screenInputEnabled)
+                {
+                    CustomInput.Instance.ShowCursor();
+                }
+                else
+                {
+                    CustomInput.Instance.HideCursor();
+                }
             }
+            
         }
     }
 
@@ -162,13 +171,11 @@ public class GameLevelManager : MonoBehaviour
         {
             CustomInput.Instance.screenInputEnabled = false;
             controlsPanel.SetActive(false);
-            CustomInput.Instance.HideCursor();
         }
         else if(controlType == 1)
         {
             CustomInput.Instance.screenInputEnabled = true;
             controlsPanel.SetActive(true);
-            CustomInput.Instance.ShowCursor();
         }
     }
 }

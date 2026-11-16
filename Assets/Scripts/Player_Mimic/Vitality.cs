@@ -46,6 +46,20 @@ public class Vitality : MonoBehaviour
         UpdateSliders();
     }
 
+
+    public bool ResolveEnemyContact(float damage, float nutrition,  Vector3 enemyPosition, float pushbackDistance)
+    {
+        RemoveNutrition(nutrition);
+        TakeDamage(damage);
+
+        Vector3 pushDirection = transform.position - enemyPosition;
+        pushDirection.y = 0f;
+        if (pushDirection.sqrMagnitude > 0f)
+            transform.position += pushDirection.normalized * pushbackDistance;
+
+        return false;
+    }
+
     public void TakeDamage(float damage)
     {
         if (damage <= 0f)

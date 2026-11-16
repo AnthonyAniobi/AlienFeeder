@@ -19,9 +19,10 @@ public class EnemyLookout : MonoBehaviour
             eyeTransform.forward, 
             out RaycastHit hitInfo, 
             lookoutDistance, 
-            LayerMask.GetMask("Player", "Wall"))
+            LayerMask.GetMask("Player"))
             )
             {
+                Debug.Log("Lookout detected: " + hitInfo.collider.name);
                 if(hitInfo.collider.CompareTag("Player"))
                 {
                     if(playerTransform == null)
@@ -35,11 +36,11 @@ public class EnemyLookout : MonoBehaviour
                 {
                     
                 }
-                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, Vector3.forward, lookoutDistance, Color.green);
+                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, eyeTransform.forward, lookoutDistance, Color.green);
             }
             else
             {
-                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, Vector3.forward, lookoutDistance, Color.red);
+                DebugExtension.DrawSphereCast(eyeTransform.position, eyeRadius, eyeTransform.forward, lookoutDistance, Color.red);
             }
         }
         // else

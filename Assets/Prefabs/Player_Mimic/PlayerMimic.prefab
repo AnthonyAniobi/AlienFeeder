@@ -1032,7 +1032,7 @@ MonoBehaviour:
   adultLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
   bossLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
   floatingPowerupTextPrefab: {fileID: 6419237037296349417, guid: 21f6dca1c296840dbb44b0230ed82de5, type: 3}
-  velocity: {x: -0.8380338, y: 0, z: 0.3051982}
+  velocity: {x: 0.26252982, y: 0, z: -0.7986188}
 --- !u!114 &4500147791810653778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1702,7 +1702,7 @@ GameObject:
   - component: {fileID: 8664424732557539340}
   m_Layer: 3
   m_Name: Sphere
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
