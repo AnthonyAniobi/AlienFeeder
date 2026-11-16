@@ -953,6 +953,7 @@ GameObject:
   - component: {fileID: 4500147791810653778}
   - component: {fileID: 1500487755295083081}
   - component: {fileID: 1071213816011122089}
+  - component: {fileID: 209122986388532310}
   m_Layer: 0
   m_Name: Mimic
   m_TagString: Untagged
@@ -1072,6 +1073,27 @@ MonoBehaviour:
   yellowLegMaterial: {fileID: 2100000, guid: 247733efc65ac4b70a7bc74a2ca5745e, type: 2}
   redLegMaterial: {fileID: 2100000, guid: ee9313ee9b0b04da2935b93945ee5318, type: 2}
   blackLegMaterial: {fileID: 2100000, guid: 653524f1f36f54f6c9907527863d3dc5, type: 2}
+--- !u!135 &209122986388532310
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926704422777073610}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.39791232
+  m_Center: {x: 0, y: -0.10208768, z: 0}
 --- !u!1 &6035437989811620758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,7 +1728,7 @@ GameObject:
   - component: {fileID: 8664424732557539340}
   m_Layer: 3
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

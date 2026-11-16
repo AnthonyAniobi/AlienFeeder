@@ -24,4 +24,14 @@ public class EnemyAttack : MonoBehaviour
             }
         }
     }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Vitality targetVitality = other.GetComponentInParent<Vitality>();
+            targetVitality?.ResolveEnemyContact(attackDamage, 0, transform.position, 10f);
+        }
+    }
 }

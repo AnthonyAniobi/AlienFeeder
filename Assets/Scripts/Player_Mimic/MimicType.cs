@@ -10,7 +10,7 @@ public class MimicType : MonoBehaviour
     
     void Start()
     {
-        Initialize(MimicTypeEnum.white);
+        Initialize(MimicTypeEnum.red);
     }
 
     public void Initialize(MimicTypeEnum mimicType)
