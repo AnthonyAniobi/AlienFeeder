@@ -417,12 +417,6 @@ public class Mimic : MonoBehaviour
 
         mimicBodyRenderer.material.color = levelColor;
 
-        // foreach (Renderer renderer in bodyRenderers ?? GetComponentsInChildren<Renderer>())
-        // {
-        //     if (renderer.GetComponent<Leg>() == null)
-        //         renderer.material.color = levelColor;
-        // }
-
         Material legMaterial = GetLegMaterial(level);
 
         foreach (Leg leg in GetComponentsInChildren<Leg>(true))

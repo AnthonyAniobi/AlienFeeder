@@ -14,3 +14,4 @@ A game where the alien goes arround eating different things until the alien is f
 - Sand Materials: https://assetstore.unity.com/packages/2d/textures-materials/nature/yughues-free-sand-materials-12964
 
 - Battery: https://sketchfab.com/3d-models/battery-steam-punk-d69264299d11494b97565ca73a5c0b55
+- Magic Effects: https://assetstore.unity.com/packages/vfx/particles/spells/magic-effects-free-247933

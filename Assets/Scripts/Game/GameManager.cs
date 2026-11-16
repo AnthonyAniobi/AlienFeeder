@@ -2,12 +2,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public bool onScreenButtons = true;
-    public 
+    public static GameManager Instance { get; private set; }
+    
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }
