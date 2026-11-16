@@ -11,6 +11,7 @@ public class MenuBarManager : MonoBehaviour
     {
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         controlTypeDropdown.onValueChanged.AddListener(SetControlType);
+        SettingsPanel.SetActive(false);
     }
 
     private void OnVolumeChanged(float value)
@@ -35,10 +36,9 @@ public class MenuBarManager : MonoBehaviour
         NavigatorManager.Instance.NavigateTo(ScreenEnum.Level);
     }
 
-    public void Settings()
+    public void Settings(bool open)
     {
-        // Implement settings functionality here
-        Debug.Log("Settings button clicked!");
+        SettingsPanel.SetActive(open);
     }
 
     public void QuitGame()
