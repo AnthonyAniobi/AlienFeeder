@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,10 @@ public class GameLevelManager : MonoBehaviour
     public GameObject pausePanel;
     [SerializeField] private Image pauseImage;
     [SerializeField] private GameObject controlsPanel;
+    [SerializeField] private Slider volumeSlider;
     bool isPaused = false;
+
+    
     
     
 
@@ -28,8 +32,19 @@ public class GameLevelManager : MonoBehaviour
 
     void Start()
     {
+        volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         Initialize();
         StartLevel(1);
+    }
+    void OnDestroy()
+    {
+        volumeSlider.onValueChanged.RemoveListener(OnVolumeChanged);
+    }
+
+     private void OnVolumeChanged(float value)
+    {
+        // BackgroundMusicManager.Instance.UpdateVolume(value);
+        // UpdateVolumeText();
     }
 
     private void Initialize()
