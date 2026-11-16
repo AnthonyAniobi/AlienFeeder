@@ -33,6 +33,7 @@ public class MenuBarManager : MonoBehaviour
 
     public void PlayGame()
     {
+        CustomInput.Instance?.ShowCursor();
         NavigatorManager.Instance.NavigateTo(ScreenEnum.Level);
     }
 

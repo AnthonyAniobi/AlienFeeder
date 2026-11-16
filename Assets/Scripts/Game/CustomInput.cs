@@ -26,7 +26,8 @@ public class CustomInput : MonoBehaviour
     {
         if(Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
+            return;
         }
         else
         {

@@ -100,6 +100,10 @@ public class GameLevelManager : MonoBehaviour
         {
             CustomInput.Instance.HideCursor();
         }
+        else
+        {
+            CustomInput.Instance.ShowCursor();
+        }
         
     }
 
