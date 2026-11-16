@@ -135,7 +135,6 @@ public class Mimic : MonoBehaviour
     void Update()
     {
         TryAttachNearbyEdible();
-        TryAttachNearbyEnemy();
 
         if (!canCreateLeg)
             return;
@@ -294,36 +293,7 @@ public class Mimic : MonoBehaviour
         }
     }
 
-    private void TryAttachNearbyEnemy()
-    {
-        if (AttachedEdible != null || isEating)
-            return;
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, enemyDetectionRadius);
-        foreach (Collider candidate in colliders)
-        {
-            EnemyAttack enemy = candidate.GetComponentInParent<EnemyAttack>();
-            if (enemy != null)
-            {
-                EnemyController enemyController = enemy.GetComponentInParent<EnemyController>();
-                EnemyAttack enemyAttack = enemy.GetComponent<EnemyAttack>();
-                vitality ??= GetComponent<Vitality>();
-                bool canBeChased = enemyController != null && enemyController.canChasePlayer;
-
-                if (
-                    canBeChased
-                    // && vitality.vitalityValue < enemyAttack.power
-                    )
-                {
-                    enemyController.SetPlayerTransform(transform);
-                    continue;
-                }
-
-                StartCoroutine(ConsumeEnemy(enemy));
-                return;
-            }
-        }
-    }
+    
 
     private IEnumerator ConsumeEdible(EdibleController edible)
     {
@@ -353,35 +323,7 @@ public class Mimic : MonoBehaviour
         isEating = false;
     }
 
-    private IEnumerator ConsumeEnemy(EnemyAttack enemy)
-    {
-        isEating = true;
-        Transform enemyTransform = enemy.transform;
-        Vector3 startPosition = enemyTransform.position;
-        float elapsed = 0f;
-
-        while (elapsed < enemyPullDuration && enemyTransform != null)
-        {
-            elapsed += Time.deltaTime;
-            float progress = enemyPullDuration <= 0f ? 1f : elapsed / enemyPullDuration;
-            enemyTransform.position = Vector3.Lerp(startPosition, transform.position, progress);
-            yield return null;
-        }
-
-        if (enemy != null)
-        {
-            vitality ??= GetComponent<Vitality>();
-            bool enemyAbsorbed = vitality != null &&
-                vitality.ResolveEnemyContact(enemy, enemyPushbackDistance);
-            if (enemyAbsorbed)
-                Destroy(enemy.gameObject);
-            else
-                ShowFloatingPowerupText(enemy.power, false);
-        }
-
-        isEating = false;
-    }
-
+ 
     public void ShowFloatingPowerupText(float value, bool isPositive)
     {
         if (floatingPowerupTextPrefab == null)

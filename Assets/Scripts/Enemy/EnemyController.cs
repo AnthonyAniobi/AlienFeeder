@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public bool canChasePlayer = true; // whether the enemy can chase the player
     public float playerAttackOffsetDistance = 2f; // distance from the player to attack
     [SerializeField] private string wallTag = "Wall";
     [SerializeField] private float obstacleCheckDistance = 1.5f;
@@ -19,7 +18,7 @@ public class EnemyController : MonoBehaviour
     
     void Update()
     {
-        if (playerTransform == null || !canChasePlayer)
+        if (playerTransform == null)
         {
             move = Vector2.zero;
             avoidanceAngle = 0f;
