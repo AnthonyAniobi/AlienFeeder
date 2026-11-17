@@ -27,6 +27,7 @@ public class GameLevelManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject losePanel;
     public GameObject winPanel;
+    public GameObject congratulationsPanel;
 
 
     // internal state variables
@@ -44,11 +45,14 @@ public class GameLevelManager : MonoBehaviour
     {
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         controlTypeDropdown.onValueChanged.AddListener(SetControlType);
+        congratulationsPanel.SetActive(false);
         Initialize();
         StartLevel(1);
         Time.timeScale = 0f; // Pause the game so user can read instructions
         instructionsPanel.SetActive(true);
         CustomInput.Instance.ShowCursor();
+        Debug.Log("GameLevelManager initialized. Starting level: " + level);
+        
     }
     void OnDestroy()
     {
@@ -174,7 +178,6 @@ public class GameLevelManager : MonoBehaviour
         Time.timeScale = 1f; // Reset time scale in case it was paused
     }
 
-
     //
     public void ToggleOnScreenControls()
     {
@@ -229,21 +232,22 @@ public class GameLevelManager : MonoBehaviour
         NavigatorManager.Instance.NavigateTo(ScreenEnum.MainMenu);
     }
 
-    public void GameOver()
+    private void GameOver()
     {
-        MainMenu();// for now just go to the main menu. will add more logic later
+        congratulationsPanel.SetActive(true);
     }
 
     public void NextLevel()
     {
-        if(GameManager.Instance != null && GameManager.Instance.IsLastLevel(level+1))
-        {
-            GameOver();
-            return;
-        }
-        gameOverPanel.SetActive(false);
-        winPanel.SetActive(false);
-        StartLevel(level + 1);
+        GameOver();
+        // if(GameManager.Instance != null && GameManager.Instance.IsLastLevel(level+1))
+        // {
+        //     GameOver();
+        //     return;
+        // }
+        // gameOverPanel.SetActive(false);
+        // winPanel.SetActive(false);
+        // StartLevel(level + 1);
     }
 
     public void CloseInstructionsPanel()
