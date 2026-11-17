@@ -239,15 +239,14 @@ public class GameLevelManager : MonoBehaviour
 
     public void NextLevel()
     {
-        GameOver();
-        // if(GameManager.Instance != null && GameManager.Instance.IsLastLevel(level+1))
-        // {
-        //     GameOver();
-        //     return;
-        // }
-        // gameOverPanel.SetActive(false);
-        // winPanel.SetActive(false);
-        // StartLevel(level + 1);
+        if(GameManager.Instance != null && GameManager.Instance.IsLastLevel(level+1))
+        {
+            GameOver();
+            return;
+        }
+        gameOverPanel.SetActive(false);
+        winPanel.SetActive(false);
+        StartLevel(level + 1);
     }
 
     public void CloseInstructionsPanel()
