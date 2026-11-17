@@ -112,7 +112,6 @@ public class GameLevelManager : MonoBehaviour
         winPanel.SetActive(false);
         losePanel.SetActive(false);
         exitInfoPanel.SetActive(false);
-
         if (!CustomInput.Instance.screenInputEnabled)
         {
             CustomInput.Instance.HideCursor();
@@ -121,7 +120,6 @@ public class GameLevelManager : MonoBehaviour
         {
             CustomInput.Instance.ShowCursor();
         }
-        
     }
 
     public void StartLevel(int levelNumber)

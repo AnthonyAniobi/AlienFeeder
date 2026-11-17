@@ -18,7 +18,7 @@ public class BackgroundMusicManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
             LoadAudioClips();
         }
