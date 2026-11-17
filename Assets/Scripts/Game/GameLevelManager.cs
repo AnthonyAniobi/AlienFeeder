@@ -36,6 +36,7 @@ public class GameLevelManager : MonoBehaviour
 
     // 
     private GameObject playerInstance;
+    private GameObject exitPortalInstance;
     private List<GameObject> enemyInstances = new List<GameObject>();
     private List<GameObject> edibleInstances = new List<GameObject>();
 
@@ -81,7 +82,7 @@ public class GameLevelManager : MonoBehaviour
         }
 
         GameLevelData currentLevelData = new AllLevelData().levels[level];
-        Instantiate(
+        exitPortalInstance = Instantiate(
             exitPortalPrefab, 
             currentLevelData.playerExitPosition, 
             Quaternion.identity
@@ -129,6 +130,10 @@ public class GameLevelManager : MonoBehaviour
         if (playerInstance != null)
         {
             Destroy(playerInstance);
+        }
+        if(exitPortalInstance != null)
+        {
+            Destroy(exitPortalInstance);
         }
         foreach (var enemy in enemyInstances)
         {
@@ -236,6 +241,8 @@ public class GameLevelManager : MonoBehaviour
             GameOver();
             return;
         }
+        gameOverPanel.SetActive(false);
+        winPanel.SetActive(false);
         StartLevel(level + 1);
     }
 

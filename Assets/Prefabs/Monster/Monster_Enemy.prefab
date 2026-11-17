@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6540477286727488036}
   - component: {fileID: 6260664645066812860}
+  - component: {fileID: 5154832688898336466}
   - component: {fileID: 8843753951004002333}
   - component: {fileID: 9142860154347029683}
   - component: {fileID: 3669312200368144289}
@@ -63,6 +64,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5154832688898336466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770444193925413943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073c6d500540b44eeb218ed49a53b159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyType
 --- !u!114 &8843753951004002333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +111,9 @@ MonoBehaviour:
   lookoutDistance: 10
   eyeTransform: {fileID: 6927917934904268148}
   eyeRadius: 1
-  wallOffsetDistance: 1
+  lookoutLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &3669312200368144289
 MonoBehaviour:
   m_ObjectHideFlags: 0
