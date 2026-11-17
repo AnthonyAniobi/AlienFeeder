@@ -20,6 +20,8 @@ public class GameLevelManager : MonoBehaviour
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private TMPro.TMP_Dropdown controlTypeDropdown;
+    [SerializeField] private GameObject instructionsPanel;
+    [SerializeField] private GameObject exitInfoPanel;
 
     [Header("Game Over UI")]
     public GameObject gameOverPanel;
@@ -43,6 +45,9 @@ public class GameLevelManager : MonoBehaviour
         controlTypeDropdown.onValueChanged.AddListener(SetControlType);
         Initialize();
         StartLevel(1);
+        Time.timeScale = 0f; // Pause the game so user can read instructions
+        instructionsPanel.SetActive(true);
+        CustomInput.Instance.ShowCursor();
     }
     void OnDestroy()
     {
@@ -62,16 +67,25 @@ public class GameLevelManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         losePanel.SetActive(true);
         winPanel.SetActive(false);
+        Time.timeScale = 0f; // Pause the game when the player loses
     }
 
     public void OnPlayerVictory()
     {
+        System.Collections.IEnumerator SpawnExitInfoPanel()
+        {
+            exitInfoPanel.SetActive(true);
+            yield return new WaitForSeconds(3f); // Wait for 3 seconds before hiding the exit info panel
+            exitInfoPanel.SetActive(false);
+        }
+
         GameLevelData currentLevelData = new AllLevelData().levels[level];
         Instantiate(
             exitPortalPrefab, 
             currentLevelData.playerExitPosition, 
             Quaternion.identity
         );
+        StartCoroutine(SpawnExitInfoPanel());
     }
 
     public void OnPlayerEnterPortal()
@@ -95,6 +109,7 @@ public class GameLevelManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         winPanel.SetActive(false);
         losePanel.SetActive(false);
+        exitInfoPanel.SetActive(false);
 
         if (!CustomInput.Instance.screenInputEnabled)
         {
@@ -212,6 +227,20 @@ public class GameLevelManager : MonoBehaviour
     public void NextLevel()
     {
         StartLevel(level + 1);
+    }
+
+    public void CloseInstructionsPanel()
+    {
+        instructionsPanel.SetActive(false);
+        Time.timeScale = 1f; // Resume the game after closing instructions
+        if(CustomInput.Instance.screenInputEnabled)
+        {
+            CustomInput.Instance.ShowCursor();
+        }
+        else
+        {
+            CustomInput.Instance.HideCursor();
+        }
     }
 
     private void SetControlType(int controlType)

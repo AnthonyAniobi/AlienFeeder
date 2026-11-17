@@ -15,3 +15,6 @@ A game where the alien goes arround eating different things until the alien is f
 
 - Battery: https://skfb.ly/pPTF8
 - Magic Effects: https://assetstore.unity.com/packages/vfx/particles/spells/magic-effects-free-247933
+
+
+- image credits: https://aliens.fandom.com/wiki/Mimic_(Edge_of_Tomorrow)
