@@ -68,6 +68,7 @@ public class GameLevelManager : MonoBehaviour
         losePanel.SetActive(true);
         winPanel.SetActive(false);
         Time.timeScale = 0f; // Pause the game when the player loses
+        CustomInput.Instance.ShowCursor();
     }
 
     public void OnPlayerVictory()
@@ -94,6 +95,7 @@ public class GameLevelManager : MonoBehaviour
         losePanel.SetActive(false);
         winPanel.SetActive(true);
         Time.timeScale = 0f; // Pause the game when the player wins
+        CustomInput.Instance.ShowCursor();
     }
 
     private void OnVolumeChanged(float value)
@@ -224,8 +226,18 @@ public class GameLevelManager : MonoBehaviour
         NavigatorManager.Instance.NavigateTo(ScreenEnum.MainMenu);
     }
 
+    public void GameOver()
+    {
+        MainMenu();// for now just go to the main menu. will add more logic later
+    }
+
     public void NextLevel()
     {
+        if(GameManager.Instance != null && GameManager.Instance.IsLastLevel(level+1))
+        {
+            GameOver();
+            return;
+        }
         StartLevel(level + 1);
     }
 

@@ -18,4 +18,11 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
+    public bool IsLastLevel(int level)
+    {
+        // Assuming you have a total of 5 levels in the game
+        int totalLevels = new AllLevelData().levels.Count; // Replace with your actual method to get total levels
+        return level >= totalLevels;
+    }
 }
