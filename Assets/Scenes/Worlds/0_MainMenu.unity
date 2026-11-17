@@ -2424,7 +2424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5883d0146d9054b919d90cb378c6cce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomInput
-  screenInputEnabled: 1
+  screenInputEnabled: 0
 --- !u!4 &951886627
 Transform:
   m_ObjectHideFlags: 0
