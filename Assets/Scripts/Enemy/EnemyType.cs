@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class EnemyType : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
-    void Update()
+    public void Initialize(float speed, float attackPower, float attackRange)
     {
-        
+        GetComponent<EnemyAttack>().Initialize(attackPower, attackRange);
+        GetComponent<EnemyMovement>().Initialize(speed);
     }
 }

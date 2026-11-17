@@ -8,6 +8,12 @@ public class EnemyAttack : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 5.5f;
 
+    public void Initialize(float attackPower, float range)
+    {
+        attackDamage = attackPower;
+        attackRange = range;   
+    }
+
 
     public void Attack()
     {
