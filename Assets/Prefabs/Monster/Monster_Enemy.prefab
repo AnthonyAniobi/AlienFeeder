@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d158dcdc1173d49c08516f8d469eef58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  playerAttackOffsetDistance: 2
+  playerAttackOffsetDistance: 4
   wallTag: Wall
   obstacleCheckDistance: 1.5
   obstacleCheckRadius: 0.5
@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   MoveSpeed: 2
-  SprintSpeed: 5.335
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 0}

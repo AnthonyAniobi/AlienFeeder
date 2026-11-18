@@ -25,13 +25,13 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if(Vector3.Distance(playerTransform.position, transform.position) <= playerAttackOffsetDistance)
-        {
-            GetComponent<EnemyAttack>()?.Attack();
-            move = Vector2.zero; // stop moving when attacking
-            avoidanceAngle = 0f;
-            return;
-        }
+        // if(Vector3.Distance(playerTransform.position, transform.position) <= playerAttackOffsetDistance)
+        // {
+        //     GetComponent<EnemyAttack>()?.Attack();
+        //     move = Vector2.zero; // stop moving when attacking
+        //     avoidanceAngle = 0f;
+        //     return;
+        // }
 
         Vector3 directionToPlayer = playerTransform.position - transform.position;
         directionToPlayer.y = 0f;

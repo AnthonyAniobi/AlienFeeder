@@ -33,9 +33,13 @@ public class CustomInput : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-            inputActions = InputSystem.actions.FindActionMap("Player");
-            inputActions.Enable();
         }
+    }
+
+    void Start()
+    {
+        inputActions = InputSystem.actions.FindActionMap("Player");
+        inputActions.Enable();
     }
 
     void Update()
