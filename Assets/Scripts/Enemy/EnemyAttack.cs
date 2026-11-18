@@ -7,6 +7,8 @@ public class EnemyAttack : MonoBehaviour
     [Header("Attack Settings")]
     public Transform attackPoint;
     public float attackRange = 5.5f;
+    [SerializeField] private float attackCooldown = 1f;
+    private float nextAttackTime;
 
     public void Initialize(float attackPower, float range)
     {
@@ -28,9 +30,13 @@ public class EnemyAttack : MonoBehaviour
 
     private void DamagePlayer(Collider other)
     {
+        if (Time.time < nextAttackTime)
+            return;
+
         Vitality targetVitality = other.GetComponentInParent<Vitality>();
         if (targetVitality != null)
         {
+            nextAttackTime = Time.time + attackCooldown;
             targetVitality.ResolveEnemyContact(attackDamage, transform.position, 3f);
         }
     }

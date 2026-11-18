@@ -42,7 +42,7 @@ public class Vitality : MonoBehaviour
         UpdateSliders();
         if (currentBatteries >= maxBatteries)
         {
-            FindObjectOfType<GameLevelManager>()?.OnPlayerVictory();
+            FindAnyObjectByType<GameLevelManager>()?.OnPlayerVictory();
         }
     }
 
@@ -61,12 +61,16 @@ public class Vitality : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (damage <= 0f)
+        if (damage <= 0f || currentHealth <= 0f)
             return;
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
         UpdateSliders();
-        FindObjectOfType<GameLevelManager>()?.OnPlayerDeath();
+
+        if (currentHealth <= 0f)
+        {
+            FindAnyObjectByType<GameLevelManager>()?.OnPlayerDeath();
+        }
     }
 
     private void RemoveNutrition(float value)
@@ -108,4 +112,3 @@ public class Vitality : MonoBehaviour
             healthText.text = $"{currentHealth}/{maxHealth}";
     }
 }
-
