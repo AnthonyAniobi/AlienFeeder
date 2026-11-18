@@ -11,6 +11,7 @@ public class MenuBarManager : MonoBehaviour
     {
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         controlTypeDropdown.onValueChanged.AddListener(SetControlType);
+        controlTypeDropdown.value = CustomInput.Instance.screenInputEnabled ? 1 : 0;
         SettingsPanel.SetActive(false);
         volumeSlider.value = BackgroundMusicManager.Instance.volume;
     }

@@ -45,6 +45,7 @@ public class GameLevelManager : MonoBehaviour
     {
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         controlTypeDropdown.onValueChanged.AddListener(SetControlType);
+        controlTypeDropdown.value = CustomInput.Instance.screenInputEnabled ? 1 : 0;
         congratulationsPanel.SetActive(false);
         Initialize();
         StartLevel(1);
@@ -52,8 +53,6 @@ public class GameLevelManager : MonoBehaviour
         instructionsPanel.SetActive(true);
         CustomInput.Instance.SetInputEnabled(false);
         CustomInput.Instance.ShowCursor();
-        Debug.Log("GameLevelManager initialized. Starting level: " + level);
-        
     }
     void OnDestroy()
     {
