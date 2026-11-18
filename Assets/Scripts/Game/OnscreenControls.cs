@@ -8,7 +8,9 @@ public class OnscreenControls : MonoBehaviour
 
     void Update()
     {
-        if (CustomInput.Instance == null || !CustomInput.Instance.screenInputEnabled)
+        if (CustomInput.Instance == null ||
+            !CustomInput.Instance.InputEnabled ||
+            !CustomInput.Instance.screenInputEnabled)
         {
             return;
         }

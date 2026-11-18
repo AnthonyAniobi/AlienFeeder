@@ -50,6 +50,7 @@ public class GameLevelManager : MonoBehaviour
         StartLevel(1);
         Time.timeScale = 0f; // Pause the game so user can read instructions
         instructionsPanel.SetActive(true);
+        CustomInput.Instance.SetInputEnabled(false);
         CustomInput.Instance.ShowCursor();
         Debug.Log("GameLevelManager initialized. Starting level: " + level);
         
@@ -73,6 +74,7 @@ public class GameLevelManager : MonoBehaviour
         losePanel.SetActive(true);
         winPanel.SetActive(false);
         Time.timeScale = 0f; // Pause the game when the player loses
+        CustomInput.Instance.SetInputEnabled(false);
         CustomInput.Instance.ShowCursor();
     }
 
@@ -100,6 +102,7 @@ public class GameLevelManager : MonoBehaviour
         losePanel.SetActive(false);
         winPanel.SetActive(true);
         Time.timeScale = 0f; // Pause the game when the player wins
+        CustomInput.Instance.SetInputEnabled(false);
         CustomInput.Instance.ShowCursor();
     }
 
@@ -208,10 +211,12 @@ public class GameLevelManager : MonoBehaviour
             Time.timeScale = isPaused ? 0f : 1f;
             if (isPaused)
             {
+                CustomInput.Instance.SetInputEnabled(false);
                 CustomInput.Instance.ShowCursor();
             }
             else
             {
+                CustomInput.Instance.SetInputEnabled(true);
                 // is playing game
                 if(CustomInput.Instance.screenInputEnabled)
                 {
@@ -235,6 +240,8 @@ public class GameLevelManager : MonoBehaviour
     private void GameOver()
     {
         congratulationsPanel.SetActive(true);
+        CustomInput.Instance.SetInputEnabled(false);
+        CustomInput.Instance.ShowCursor();
     }
 
     public void NextLevel()
@@ -246,6 +253,7 @@ public class GameLevelManager : MonoBehaviour
         }
         gameOverPanel.SetActive(false);
         winPanel.SetActive(false);
+        CustomInput.Instance.SetInputEnabled(true);
         StartLevel(level + 1);
     }
 
@@ -253,6 +261,7 @@ public class GameLevelManager : MonoBehaviour
     {
         instructionsPanel.SetActive(false);
         Time.timeScale = 1f; // Resume the game after closing instructions
+        CustomInput.Instance.SetInputEnabled(true);
         if(CustomInput.Instance.screenInputEnabled)
         {
             CustomInput.Instance.ShowCursor();

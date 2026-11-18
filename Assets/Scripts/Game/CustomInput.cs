@@ -7,6 +7,9 @@ public class CustomInput : MonoBehaviour
 
     [Header("Input Type")]
     public bool screenInputEnabled = false;
+    [Header("Input State")]
+    [SerializeField] private bool inputEnabled = true;
+    public bool InputEnabled => inputEnabled;
     
     internal Vector2 move;
     internal Vector2 look;
@@ -44,6 +47,22 @@ public class CustomInput : MonoBehaviour
 
     void Update()
     {
+        if (!inputEnabled)
+        {
+            move = Vector2.zero;
+            look = Vector2.zero;
+            attackSingle = false;
+            attackContinuous = false;
+            reload = false;
+            cameraSwitch = false;
+            sprint = false;
+            jump = false;
+            nextWeapon = false;
+            prevWeapon = false;
+            escape = false;
+            return;
+        }
+
         if(!screenInputEnabled)
         {
             move = inputActions.FindAction("Move").ReadValue<Vector2>();
@@ -70,5 +89,25 @@ public class CustomInput : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void SetInputEnabled(bool enabled)
+    {
+        inputEnabled = enabled;
+
+        if (!enabled)
+        {
+            move = Vector2.zero;
+            look = Vector2.zero;
+            attackSingle = false;
+            attackContinuous = false;
+            reload = false;
+            cameraSwitch = false;
+            sprint = false;
+            jump = false;
+            nextWeapon = false;
+            prevWeapon = false;
+            escape = false;
+        }
     }
 }
