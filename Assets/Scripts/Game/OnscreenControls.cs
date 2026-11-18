@@ -8,6 +8,11 @@ public class OnscreenControls : MonoBehaviour
 
     void Update()
     {
+        if (CustomInput.Instance == null || !CustomInput.Instance.screenInputEnabled)
+        {
+            return;
+        }
+
         CustomInput.Instance.move = new Vector2(
             movementJoystick.Horizontal, 
             movementJoystick.Vertical
