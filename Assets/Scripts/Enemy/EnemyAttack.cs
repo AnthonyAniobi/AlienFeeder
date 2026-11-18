@@ -23,6 +23,11 @@ public class EnemyAttack : MonoBehaviour
         DamagePlayer(other);
     }
 
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     DamagePlayer(collision.collider);
+    // }
+
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         DamagePlayer(hit.collider);
@@ -30,10 +35,11 @@ public class EnemyAttack : MonoBehaviour
 
     private void DamagePlayer(Collider other)
     {
-        if (Time.time < nextAttackTime)
-            return;
+        // if (Time.time < nextAttackTime)
+        //     return;
 
         Vitality targetVitality = other.GetComponentInParent<Vitality>();
+        // Vitality targetVitality = other.GetComponent<Vitality>();
         if (targetVitality != null)
         {
             nextAttackTime = Time.time + attackCooldown;
