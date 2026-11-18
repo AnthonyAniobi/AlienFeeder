@@ -29,11 +29,11 @@ public static class EnumTypeExtensions
         switch (enemyType)
         {
             case EnemyTypeEnum.basic:
-                return 4f;
+                return 3.8f;
             case EnemyTypeEnum.medium:
-                return 6f;
+                return 5f;
             case EnemyTypeEnum.advanced:
-                return 7f;
+                return 6.5f;
             default:
                 return 5f;
         }
