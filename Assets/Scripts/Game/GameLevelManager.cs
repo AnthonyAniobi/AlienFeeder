@@ -168,6 +168,7 @@ public class GameLevelManager : MonoBehaviour
                 enemyPrefab, 
                 enemyData.position, Quaternion.identity
             );
+            enemyInstance.GetComponentInChildren<EnemyType>().Initialize(enemyData.enemyType);
             enemyInstances.Add(enemyInstance);
         }
         foreach (var edibleData in levelData.edibles)

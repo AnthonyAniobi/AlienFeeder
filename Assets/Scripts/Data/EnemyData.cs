@@ -3,32 +3,24 @@ using UnityEngine;
 public class EnemyData
 {
     public Vector3 position;
-    public float power;
-    public float damage;
-    public bool isMoving;
+    public EnemyTypeEnum enemyType;
 
-    public EnemyData(Vector3 position, float power, float damage, bool isMoving)
+    public EnemyData(Vector3 position, EnemyTypeEnum enemyType)
     {
         this.position = position;
-        this.power = power;
-        this.damage = damage;
-        this.isMoving = isMoving;
+        this.enemyType = enemyType;
     }
 
-    public EnemyData(float x, float y, float power, float damage, bool isMoving)
+    public EnemyData(float x, float y, EnemyTypeEnum enemyType)
     {
         this.position = new Vector3(x, 1, y);
-        this.power = power;
-        this.damage = damage;
-        this.isMoving = false;
+        this.enemyType = enemyType;
     }
 
-    public EnemyData(Vector3 position, float power, float damage)
-    {
-        this.position = position;
-        this.power = power;
-        this.damage = damage;
-        this.isMoving = false;
-    }
+    // public EnemyData(Vector3 position, EnemyTypeEnum enemyType)
+    // {
+    //     this.position = position;
+    //     this.enemyType = enemyType;
+    // }
 }
 
