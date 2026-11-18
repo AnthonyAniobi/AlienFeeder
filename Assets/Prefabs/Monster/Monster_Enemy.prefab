@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 073c6d500540b44eeb218ed49a53b159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyType
+  meshRenderer: {fileID: 45114029538650798}
 --- !u!114 &8843753951004002333
 MonoBehaviour:
   m_ObjectHideFlags: 0

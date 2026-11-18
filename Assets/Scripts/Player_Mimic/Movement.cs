@@ -16,6 +16,7 @@ namespace MimicSpace
         [Range(0.5f, 5f)]
         public float height = 0.8f;
         public float speed = 5f;
+        public float sprintSpeed = 8f;
         [Header("Camera Look")]
         [Tooltip("Transform rotated by mouse or stick look input. Defaults to this Mimic transform.")]
         [SerializeField] private Transform cameraLookTarget;
@@ -51,7 +52,8 @@ namespace MimicSpace
         {
             Vector3 inputDirection = new Vector3(CustomInput.Instance.move.x, 0f, CustomInput.Instance.move.y);
             Vector3 cameraRelativeDirection = Quaternion.Euler(0f, cameraTargetYaw, 0f) * inputDirection.normalized;
-            velocity = Vector3.Lerp(velocity, cameraRelativeDirection * speed, velocityLerpCoef * Time.deltaTime);
+            float currentSpeed = CustomInput.Instance.sprint ? sprintSpeed : speed;
+            velocity = Vector3.Lerp(velocity, cameraRelativeDirection * currentSpeed, velocityLerpCoef * Time.deltaTime);
 
             // Assigning velocity to the mimic to assure great leg placement
             myMimic.velocity = velocity;

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyType : MonoBehaviour
 {
+    [SerializeField] private MeshRenderer meshRenderer;
     public void Initialize(EnemyTypeEnum enemyType
     )
     {
@@ -12,6 +13,10 @@ public class EnemyType : MonoBehaviour
         GetComponent<EnemyMovement>().Initialize(
             enemyType.GetSpeed()
         );
+        if (meshRenderer != null)
+        {
+            meshRenderer.material.color = enemyType.GetColor();
+        }
     }
 }
 
@@ -66,6 +71,21 @@ public static class EnumTypeExtensions
                 return 10f;
             default:
                 return 5f;
+        }
+    }
+
+    public static Color GetColor(this EnemyTypeEnum enemyType)
+    {
+        switch (enemyType)
+        {
+            case EnemyTypeEnum.basic:
+                return Color.blue;
+            case EnemyTypeEnum.medium:
+                return Color.orange;
+            case EnemyTypeEnum.advanced:
+                return Color.red;
+            default:
+                return Color.blue;
         }
     }
 }
