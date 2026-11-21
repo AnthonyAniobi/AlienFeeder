@@ -18,3 +18,9 @@ A game where the alien goes arround eating different things until the alien is f
 
 
 - image credits: https://aliens.fandom.com/wiki/Mimic_(Edge_of_Tomorrow)
+
+- Enemy white: https://skfb.ly/pMKXA
+
+- Enemy green: https://skfb.ly/pNGBG
+
+- Enemy Black: https://skfb.ly/oV6pL
